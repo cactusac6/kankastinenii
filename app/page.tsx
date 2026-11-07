@@ -319,7 +319,7 @@ export default function Home() {
           >
             <div ref={heroImgRef} className="absolute inset-0 transition-transform duration-300 ease-out will-change-transform">
               <Image
-                src="https://images.pexels.com/photos/36197104/pexels-photo-36197104.jpeg?auto=compress&cs=tinysrgb&w=1400"
+                src="/hero/hero-desktop.jpg"
                 alt="Žaluzie na okně"
                 fill
                 priority
@@ -330,10 +330,23 @@ export default function Home() {
             </div>
           </div>
 
-          {/* hero image — mobile strip */}
-          <div className="lg:hidden h-48 sm:h-60 overflow-hidden relative" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) .1s both" }}>
+          {/* hero image — tablet strip */}
+          <div className="hidden md:block lg:hidden h-72 overflow-hidden relative" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) .1s both" }}>
             <Image
-              src="https://images.pexels.com/photos/36197104/pexels-photo-36197104.jpeg?auto=compress&cs=tinysrgb&w=900"
+              src="/hero/hero-desktop.jpg"
+              alt="Žaluzie na okně"
+              fill
+              priority
+              fetchPriority="high"
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </div>
+
+          {/* hero image — mobile strip */}
+          <div className="md:hidden h-48 sm:h-60 overflow-hidden relative" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) .1s both" }}>
+            <Image
+              src="/hero/hero-mobile.jpg"
               alt="Žaluzie na okně"
               fill
               priority
@@ -348,13 +361,13 @@ export default function Home() {
       {/* ── SERVICES ── */}
       <div id="sluzby" className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28 scroll-mt-16 md:scroll-mt-20">
         <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co dělám</p>
+          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co děláme</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
             Žaluzie, rolety,<br className="sm:hidden" /> sítě a servis
           </h2>
           <p className="mt-4 text-stone-500 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed">
-            Montuji a opravuji žaluzie, rolety, markýzy, plisé, japonské stěny, sítě proti hmyzu
-            i garážová vrata. Co jde opravit, radši opravím, než abyste kupovali nové.
+            Montujeme a opravujeme žaluzie, rolety, markýzy, plisé, japonské stěny, sítě proti hmyzu
+            i garážová vrata. Co jde opravit, radši opravíme, než abyste kupovali nové.
           </p>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 lg:gap-5">
