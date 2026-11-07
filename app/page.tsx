@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { resetConsent, setConsent, useConsent } from "@/lib/cookieConsent";
 import { faqs, YEAR_FOUNDED } from "@/lib/faqs";
@@ -49,7 +49,6 @@ export default function Home() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const mapsAllowed = useConsent() === "all";
-  const heroImgRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
 
@@ -155,19 +154,6 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const onHeroMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const el = heroImgRef.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `scale(1.04) translate(${-px * 14}px, ${-py * 14}px)`;
-  }, []);
-  const onHeroLeave = useCallback(() => {
-    const el = heroImgRef.current;
-    if (el) el.style.transform = "";
-  }, []);
-
   useEffect(() => {
     if (lightbox === null) return;
     const onKey = (e: KeyboardEvent) => {
@@ -267,25 +253,40 @@ export default function Home() {
       </header>
 
       {/* ── HERO ── */}
-      <section className="relative pt-[58px] md:pt-[68px] bg-[#f0ebe0] overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage: "repeating-linear-gradient(0deg, #78350f 0px, #78350f 3px, transparent 3px, transparent 26px)",
-          }}
-        />
-        <div aria-hidden className="pointer-events-none absolute -top-24 -left-32 w-[420px] h-[420px] rounded-full bg-amber-300/25 blur-[100px]" />
-        <div aria-hidden className="pointer-events-none absolute top-1/3 -right-24 w-[360px] h-[360px] rounded-full bg-amber-200/30 blur-[90px]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-[1fr_480px] xl:grid-cols-[1fr_560px] gap-0 items-center min-h-[calc(100svh-58px)] md:min-h-[calc(100svh-68px)]">
-          <div className="py-12 sm:py-16 md:py-20 lg:py-24 lg:pr-14" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) both" }}>
-            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4 sm:mb-5">
+      <section className="relative pt-[58px] md:pt-[68px] overflow-hidden">
+        {/* background photo */}
+        <div aria-hidden className="absolute inset-0">
+          <Image
+            src="/hero/hero-desktop.jpg"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="hidden md:block object-cover"
+          />
+          <Image
+            src="/hero/hero-mobile.jpg"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="block md:hidden object-cover object-top"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/75 to-stone-950/40 md:from-stone-950/92 md:via-stone-950/70 md:to-stone-950/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent md:hidden" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 min-h-[calc(100svh-58px)] md:min-h-[calc(100svh-68px)] flex items-center">
+          <div className="py-16 sm:py-20 md:py-24 max-w-xl" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) both" }}>
+            <p className="text-amber-400 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4 sm:mb-5">
               Žaluzie · Rolety · Sítě
             </p>
-            <h1 className="text-[40px] sm:text-[56px] md:text-[68px] xl:text-[78px] font-black leading-[0.93] tracking-tight text-stone-900">
-              Žaluzie<br />Mladá<br /><span className="text-amber-600">Boleslav</span>
+            <h1 className="text-[40px] sm:text-[56px] md:text-[68px] xl:text-[78px] font-black leading-[0.93] tracking-tight text-white">
+              Žaluzie<br />Mladá<br /><span className="text-amber-500">Boleslav</span>
             </h1>
-            <p className="mt-5 md:mt-6 text-stone-600 text-base sm:text-lg md:text-xl leading-relaxed max-w-md">
+            <p className="mt-5 md:mt-6 text-stone-200 text-base sm:text-lg md:text-xl leading-relaxed max-w-md">
               Jsme Kaňka stínění — žaluzie, rolety a sítě prodáváme, montujeme a opravujeme
               už {FATHER_YEARS} let. Táta s tím začal v roce {YEAR_FOUNDED}, dnes jezdíme na zakázky spolu jako otec a syn.
             </p>
@@ -296,64 +297,18 @@ export default function Home() {
               >
                 Nezávazná poptávka
               </button>
-              <a href="#sluzby" className="btn-secondary">
+              <a href="#sluzby" className="inline-flex items-center justify-center border border-white/40 hover:bg-white/10 active:scale-95 transition-all text-white font-semibold px-6 py-3.5 rounded-lg whitespace-nowrap">
                 Naše služby
               </a>
             </div>
-            <div className="mt-8 md:mt-10 pt-7 md:pt-8 border-t border-stone-300/70 grid grid-cols-3 gap-4 sm:gap-6">
+            <div className="mt-8 md:mt-10 pt-7 md:pt-8 border-t border-white/20 grid grid-cols-3 gap-4 sm:gap-6">
               {[[`${FATHER_YEARS} let`, "na trhu"], ["50 km", "dojezd od Kosmonos"], ["Zdarma", "zaměření"]].map(([val, label]) => (
                 <div key={label}>
-                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-stone-900">{val}</p>
-                  <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">{label}</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-white">{val}</p>
+                  <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 leading-snug">{label}</p>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* hero image — desktop */}
-          <div
-            className="hidden lg:block self-stretch relative overflow-hidden"
-            onMouseMove={onHeroMove}
-            onMouseLeave={onHeroLeave}
-            style={{ animation: "heroImgIn .9s cubic-bezier(.16,1,.3,1) .15s both" }}
-          >
-            <div ref={heroImgRef} className="absolute inset-0 transition-transform duration-300 ease-out will-change-transform">
-              <Image
-                src="/hero/hero-desktop.jpg"
-                alt="Žaluzie na okně"
-                fill
-                priority
-                fetchPriority="high"
-                sizes="(min-width: 1280px) 560px, 480px"
-                className="object-cover scale-105"
-              />
-            </div>
-          </div>
-
-          {/* hero image — tablet strip */}
-          <div className="hidden md:block lg:hidden h-72 overflow-hidden relative" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) .1s both" }}>
-            <Image
-              src="/hero/hero-desktop.jpg"
-              alt="Žaluzie na okně"
-              fill
-              priority
-              fetchPriority="high"
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </div>
-
-          {/* hero image — mobile strip */}
-          <div className="md:hidden h-48 sm:h-60 overflow-hidden relative" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) .1s both" }}>
-            <Image
-              src="/hero/hero-mobile.jpg"
-              alt="Žaluzie na okně"
-              fill
-              priority
-              fetchPriority="high"
-              sizes="100vw"
-              className="object-cover object-center"
-            />
           </div>
         </div>
       </section>
