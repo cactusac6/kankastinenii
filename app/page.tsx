@@ -225,9 +225,19 @@ export default function Home() {
       {/* ── NAVBAR ── */}
       <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${scrolled ? "shadow-[0_1px_12px_rgba(0,0,0,0.07)] border-b border-stone-200" : "border-b border-transparent"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between h-[58px] md:h-[68px]">
-          <a href="#" className="flex flex-col leading-none group">
-            <span className="text-[17px] md:text-xl font-bold tracking-tight group-hover:text-amber-700 transition-colors">Kaňka stínění</span>
-            <span className="text-[10px] md:text-[11px] text-stone-400 mt-0.5">Mladá Boleslav a okolí</span>
+          <a href="#" className="flex items-center gap-2.5 group">
+            <Image
+              src="/logo/kanka-stineni-mark.png"
+              alt="Kaňka stínění"
+              width={48}
+              height={46}
+              className="h-9 md:h-11 w-auto"
+              priority
+            />
+            <span className="flex flex-col leading-none">
+              <span className="text-[17px] md:text-xl font-bold tracking-tight group-hover:text-amber-700 transition-colors">Kaňka stínění</span>
+              <span className="text-[10px] md:text-[11px] text-stone-400 mt-0.5">Mladá Boleslav a okolí</span>
+            </span>
           </a>
 
           <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-[14px] lg:text-[15px] text-stone-500">
@@ -692,7 +702,16 @@ export default function Home() {
       <footer className="bg-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-12 md:py-16 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="sm:col-span-2 md:col-span-1">
-            <h3 className="text-base md:text-lg font-bold">Kaňka stínění</h3>
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/logo/kanka-stineni-mark.png"
+                alt="Kaňka stínění"
+                width={40}
+                height={38}
+                className="h-8 w-auto"
+              />
+              <h3 className="text-base md:text-lg font-bold">Kaňka stínění</h3>
+            </div>
             <p className="text-stone-400 mt-2 text-sm leading-relaxed">Kosmonosy / Mladá Boleslav</p>
           </div>
           <div>
