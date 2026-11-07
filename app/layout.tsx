@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "./components/CookieConsent";
@@ -72,6 +72,10 @@ export const metadata: Metadata = {
       "Žaluzie Mladá Boleslav a okolí do 50 km – montáž žaluzií, rolet a sítí proti hmyzu. Zaměření zdarma.",
     images: ["/og-image.jpg"],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#d97706",
 };
 
 const jsonLd = {

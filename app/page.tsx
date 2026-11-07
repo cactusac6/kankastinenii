@@ -72,7 +72,7 @@ export default function Home() {
       return;
     }
     if (!form.phone.trim() && !form.email.trim()) {
-      setErrorMsg("Vyplňte alespoň telefon nebo e-mail, ať se vám mohu ozvat.");
+      setErrorMsg("Vyplňte alespoň telefon nebo e-mail, ať se vám můžeme ozvat.");
       setStatus("error");
       return;
     }
@@ -170,7 +170,7 @@ export default function Home() {
     { img: "https://images.pexels.com/photos/15021456/pexels-photo-15021456.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Horizontální žaluzie", s: "Hliník nebo dřevo, v jakékoli barvě." },
     { img: "https://images.pexels.com/photos/16153504/pexels-photo-16153504.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Rolety den a noc", s: "Přes den světlo, večer tma a soukromí." },
     { img: "https://images.pexels.com/photos/17756267/pexels-photo-17756267.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Sítě proti hmyzu", s: "Rámové i rolovací. Větrá se, komáři ne." },
-    { img: "https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Servis a opravy", s: "Nefunguje žaluzie, roleta nebo markýza? Opravím i to, co jiní vyhodí." },
+    { img: "https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Servis a opravy", s: "Nefunguje žaluzie, roleta nebo markýza? Opravíme i to, co jiní vyhodí." },
   ];
 
   const steps = [
@@ -547,7 +547,7 @@ export default function Home() {
           {[
             { t: `${FATHER_YEARS} let zkušeností v rodině`, s: "Otec dělá žaluzie od roku 1992, já se u něj učím od roku 2018. Víme, jak se co montuje." },
             { t: "Jezdíme osobně", s: "Žádní brigádníci ani subdodavatelé. Na zakázku přijedeme my dva." },
-            { t: "Opravíme, co jde", s: "Když se stará žaluzie nebo roleta dá opravit, opravím ji. Nové vám cpát nebudu." },
+            { t: "Opravíme, co jde", s: "Když se stará žaluzie nebo roleta dá opravit, opravíme ji. Nové vám cpát nebudeme." },
           ].map((r, idx) => (
             <div key={idx} data-reveal style={{ transitionDelay: `${idx * 70}ms` }}
               className="bg-white rounded-xl border border-stone-200 p-5 md:p-6">
@@ -623,7 +623,7 @@ export default function Home() {
             ) : (
               <div className="w-full h-full bg-stone-100 flex flex-col items-center justify-center text-center p-6 gap-3">
                 <p className="text-stone-600 text-sm max-w-xs leading-relaxed">
-                  Mapu zobrazím po souhlasu s cookies — načte se z Google Maps.
+                  Mapa se zobrazí po souhlasu s cookies — načte se z Google Maps.
                 </p>
                 <button
                   type="button"
@@ -802,7 +802,7 @@ export default function Home() {
                   <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                     <p className="text-stone-400 text-xs sm:text-sm">Ozýváme se zpravidla ještě ten den.</p>
                     <button type="submit" disabled={status === "sending"} className="btn-primary disabled:opacity-60 disabled:cursor-not-allowed shrink-0">
-                      {status === "sending" ? "Odesílám…" : "Odeslat poptávku"}
+                      {status === "sending" ? "Odesíláme…" : "Odeslat poptávku"}
                     </button>
                   </div>
                 </form>
