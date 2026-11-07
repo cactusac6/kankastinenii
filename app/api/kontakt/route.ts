@@ -39,7 +39,7 @@ export async function POST(req: Request) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
       </head>
       <body style="font-family: Arial, Helvetica, sans-serif;">
-        <h2>Nová poptávka z webu – Kaňka žaluzie</h2>
+        <h2>Nová poptávka z webu – Kaňka stínění</h2>
         <p><strong>Jméno:</strong> ${escapeHtml(name)}</p>
         <p><strong>Telefon:</strong> ${escapeHtml(phone || "—")}</p>
         <p><strong>E-mail:</strong> ${escapeHtml(email || "—")}</p>
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Kaňka žaluzie <onboarding@resend.dev>",
+        from: "Kaňka stínění <onboarding@resend.dev>",
         to: [TO_EMAIL],
         subject: `Nová poptávka z webu — ${name}`,
         html,

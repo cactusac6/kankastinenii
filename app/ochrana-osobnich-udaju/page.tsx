@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Zásady ochrany osobních údajů",
   description:
-    "Informace o zpracování osobních údajů v souvislosti s poptávkovým formulářem na webu Kaňka žaluzie.",
+    "Informace o zpracování osobních údajů v souvislosti s poptávkovým formulářem na webu Kaňka stínění.",
   alternates: { canonical: "/ochrana-osobnich-udaju" },
   robots: { index: true, follow: true },
 };
@@ -13,7 +13,7 @@ export default function OchranaOsobnichUdaju() {
   return (
     <main className="bg-[#faf8f5] text-stone-900 min-h-screen">
       <div className="max-w-3xl mx-auto px-5 md:px-8 py-16 md:py-24">
-        <Link href="/" className="text-orange-600 hover:text-orange-700 transition text-sm font-medium">
+        <Link href="/" className="text-amber-600 hover:text-amber-700 transition text-sm font-medium">
           ← Zpět na web
         </Link>
 
@@ -28,11 +28,11 @@ export default function OchranaOsobnichUdaju() {
             <p>
               Správcem osobních údajů je Jan Kaňka, se sídlem Kosmonosy, 293 06, IČO: 23200928
               (neplátce DPH), e-mail:{" "}
-              <a href="mailto:jankanka6@seznam.cz" className="text-orange-600 hover:underline">
+              <a href="mailto:jankanka6@seznam.cz" className="text-amber-600 hover:underline">
                 jankanka6@seznam.cz
               </a>
               , telefon:{" "}
-              <a href="tel:+420776385776" className="text-orange-600 hover:underline">
+              <a href="tel:+420776385776" className="text-amber-600 hover:underline">
                 776 385 776
               </a>{" "}
               (dále jen „správce“).
@@ -106,11 +106,11 @@ export default function OchranaOsobnichUdaju() {
             </ul>
             <p className="mt-3">
               Svá práva můžete uplatnit e-mailem na{" "}
-              <a href="mailto:jankanka6@seznam.cz" className="text-orange-600 hover:underline">
+              <a href="mailto:jankanka6@seznam.cz" className="text-amber-600 hover:underline">
                 jankanka6@seznam.cz
               </a>{" "}
               nebo telefonicky na{" "}
-              <a href="tel:+420776385776" className="text-orange-600 hover:underline">
+              <a href="tel:+420776385776" className="text-amber-600 hover:underline">
                 776 385 776
               </a>
               .

@@ -19,8 +19,8 @@ const siteUrl = "https://kankastineni.cz";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Žaluzie Mladá Boleslav – Kaňka žaluzie",
-    template: "%s | Kaňka žaluzie",
+    default: "Žaluzie Mladá Boleslav – Kaňka stínění",
+    template: "%s | Kaňka stínění",
   },
   description:
     "Žaluzie Mladá Boleslav a okolí do 50 km – montáž a opravy žaluzií, rolet, markýz, plisé, japonských stěn a sítí proti hmyzu. Středočeský, Liberecký i Královéhradecký kraj. Praxe od roku 1992. Zaměření zdarma, nezávazná nabídka.",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     "žaluzie Turnov",
     "žaluzie Jičín",
     "žaluzie Mnichovo Hradiště",
-    "Kaňka žaluzie",
+    "Kaňka stínění",
   ],
   authors: [{ name: "Jan Kaňka" }],
   creator: "Jan Kaňka",
@@ -59,15 +59,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "cs_CZ",
     url: siteUrl,
-    siteName: "Kaňka žaluzie",
-    title: "Žaluzie Mladá Boleslav – Kaňka žaluzie",
+    siteName: "Kaňka stínění",
+    title: "Žaluzie Mladá Boleslav – Kaňka stínění",
     description:
       "Žaluzie Mladá Boleslav a okolí do 50 km – montáž žaluzií, rolet a sítí proti hmyzu. Praxe od roku 1992. Zaměření zdarma, nezávazná nabídka.",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Žaluzie a stínicí technika – Kaňka žaluzie" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Žaluzie a stínicí technika – Kaňka stínění" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Žaluzie Mladá Boleslav – Kaňka žaluzie",
+    title: "Žaluzie Mladá Boleslav – Kaňka stínění",
     description:
       "Žaluzie Mladá Boleslav a okolí do 50 km – montáž žaluzií, rolet a sítí proti hmyzu. Zaměření zdarma.",
     images: ["/og-image.jpg"],
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "HomeAndConstructionBusiness",
-  name: "Kaňka žaluzie",
+  name: "Kaňka stínění",
   image: `${siteUrl}/og-image.jpg`,
   url: siteUrl,
   telephone: "+420776385776",

@@ -95,11 +95,11 @@ export default function Home() {
         setStatus("ok");
         setForm({ name: "", phone: "", email: "", message: "" });
       } else {
-        setErrorMsg("Nepodařilo se odeslat. Zkuste to prosím znovu, nebo mi rovnou zavolejte na 776 385 776.");
+        setErrorMsg("Nepodařilo se odeslat. Zkuste to prosím znovu, nebo nám rovnou zavolejte na 776 385 776.");
         setStatus("error");
       }
     } catch {
-      setErrorMsg("Nepodařilo se odeslat — zkontrolujte připojení a zkuste to znovu, nebo mi zavolejte na 776 385 776.");
+      setErrorMsg("Nepodařilo se odeslat — zkontrolujte připojení a zkuste to znovu, nebo nám zavolejte na 776 385 776.");
       setStatus("error");
     }
   }
@@ -226,7 +226,7 @@ export default function Home() {
       <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${scrolled ? "shadow-[0_1px_12px_rgba(0,0,0,0.07)] border-b border-stone-200" : "border-b border-transparent"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between h-[58px] md:h-[68px]">
           <a href="#" className="flex flex-col leading-none group">
-            <span className="text-[17px] md:text-xl font-bold tracking-tight group-hover:text-amber-700 transition-colors">Kaňka žaluzie</span>
+            <span className="text-[17px] md:text-xl font-bold tracking-tight group-hover:text-amber-700 transition-colors">Kaňka stínění</span>
             <span className="text-[10px] md:text-[11px] text-stone-400 mt-0.5">Mladá Boleslav a okolí</span>
           </a>
 
@@ -276,8 +276,8 @@ export default function Home() {
               Žaluzie<br />Mladá<br /><span className="text-amber-600">Boleslav</span>
             </h1>
             <p className="mt-5 md:mt-6 text-stone-600 text-base sm:text-lg md:text-xl leading-relaxed max-w-md">
-              Jmenuji se Jan Kaňka. Žaluzie dělám od roku 2018, naučil mě to otec, který je
-              v oboru už {FATHER_YEARS} let. Jezdíme spolu dodnes.
+              Jsme Kaňka stínění — žaluzie, rolety a sítě prodáváme, montujeme a opravujeme
+              už {FATHER_YEARS} let. Táta s tím začal v roce {YEAR_FOUNDED}, dnes jezdíme na zakázky spolu jako otec a syn.
             </p>
             <div className="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3">
               <button
@@ -287,11 +287,11 @@ export default function Home() {
                 Nezávazná poptávka
               </button>
               <a href="#sluzby" className="btn-secondary">
-                Mé služby
+                Naše služby
               </a>
             </div>
             <div className="mt-8 md:mt-10 pt-7 md:pt-8 border-t border-stone-300/70 grid grid-cols-3 gap-4 sm:gap-6">
-              {[[`${FATHER_YEARS} let`, "praxe mého otce"], ["50 km", "dojezd od Kosmonos"], ["Zdarma", "zaměření"]].map(([val, label]) => (
+              {[[`${FATHER_YEARS} let`, "na trhu"], ["50 km", "dojezd od Kosmonos"], ["Zdarma", "zaměření"]].map(([val, label]) => (
                 <div key={label}>
                   <p className="text-xl sm:text-2xl md:text-3xl font-black text-stone-900">{val}</p>
                   <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">{label}</p>
@@ -452,13 +452,13 @@ export default function Home() {
       <div id="o-nas" className="bg-[#f0ebe0] border-y border-stone-200 scroll-mt-16 md:scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           <div data-reveal className="order-2 lg:order-1">
-            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kdo jsem</p>
+            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kdo jsme</p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-5 md:mb-6">
-              Jan Kaňka<br />z Kosmonos
+              Otec a syn<br />z Kosmonos
             </h2>
             <p className="text-stone-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4">
-              Žaluziím se věnuji od roku 2018. Naučil mě to otec, který je v oboru už {FATHER_YEARS} let
-              a se kterým na zakázky jezdím dodnes.
+              Jsme Kaňka stínění — otec v oboru začal v roce {YEAR_FOUNDED}, já (Jan) jsem se přidal v roce 2018
+              a na zakázky jezdíme spolu dodnes.
             </p>
             <p className="text-stone-500 text-sm sm:text-base md:text-lg leading-relaxed mb-8 md:mb-10">
               Montujeme v bytech, domech, kancelářích i ve starých budovách. Žádní brigádníci
@@ -467,7 +467,7 @@ export default function Home() {
             <div className="grid grid-cols-3 gap-4 sm:gap-6 border-t border-stone-300/70 pt-7 md:pt-8">
               <div>
                 <p className="text-2xl sm:text-3xl font-black"><AnimatedNumber value={FATHER_YEARS} suffix=" let" /></p>
-                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">praxe mého otce</p>
+                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">na trhu</p>
               </div>
               <div>
                 <p className="text-2xl sm:text-3xl font-black"><AnimatedNumber value={50} suffix=" km" /></p>
@@ -475,7 +475,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-2xl sm:text-3xl font-black"><AnimatedNumber value={JAN_YEARS} suffix=" let" /></p>
-                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">moje praxe v oboru</p>
+                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">Jan v oboru</p>
               </div>
             </div>
           </div>
@@ -494,12 +494,12 @@ export default function Home() {
       {/* ── PŮSOBNOST ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
         <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kde jezdím</p>
+          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kde jezdíme</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
             Mladá Boleslav<br />a okolí do 50 km
           </h2>
           <p className="mt-4 text-stone-500 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
-            Bydlím v Kosmonosech. Do hodiny jízdy se většinou domluvíme.
+            Sídlíme v Kosmonosech. Do hodiny jízdy se většinou domluvíme.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
@@ -520,7 +520,7 @@ export default function Home() {
           ))}
         </div>
         <p className="mt-6 text-stone-400 text-xs sm:text-sm text-center">
-          Svou obec tu nevidíte? Napište mi, pravděpodobně přijedeme.
+          Svou obec tu nevidíte? Napište nám, pravděpodobně přijedeme.
         </p>
       </div>
 
@@ -585,7 +585,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
           <div data-reveal>
             <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kontakt</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-8">Napište mi<br />nebo zavolejte</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-8">Napište nám<br />nebo zavolejte</h2>
             <div className="space-y-5">
               <a href="tel:+420776385776" className="flex items-center gap-4 group">
                 <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
@@ -640,7 +640,7 @@ export default function Home() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Kaňka žaluzie — Kosmonosy"
+                title="Kaňka stínění — Kosmonosy"
               />
             ) : (
               <div className="w-full h-full bg-stone-100 flex flex-col items-center justify-center text-center p-6 gap-3">
@@ -692,7 +692,7 @@ export default function Home() {
       <footer className="bg-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-12 md:py-16 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="sm:col-span-2 md:col-span-1">
-            <h3 className="text-base md:text-lg font-bold">Kaňka žaluzie</h3>
+            <h3 className="text-base md:text-lg font-bold">Kaňka stínění</h3>
             <p className="text-stone-400 mt-2 text-sm leading-relaxed">Kosmonosy / Mladá Boleslav</p>
           </div>
           <div>
@@ -716,7 +716,7 @@ export default function Home() {
           </div>
         </div>
         <div className="border-t border-stone-800 py-4 pb-[88px] md:pb-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-5 text-stone-500 text-xs text-center px-4">
-          <span>© {new Date().getFullYear()} Kaňka žaluzie — Jan Kaňka</span>
+          <span>© {new Date().getFullYear()} Kaňka stínění — Jan Kaňka</span>
           <a href="/ochrana-osobnich-udaju" className="hover:text-stone-300 transition-colors">Zásady ochrany osobních údajů</a>
           <button type="button" onClick={resetConsent} className="hover:text-stone-300 transition-colors">Nastavení cookies</button>
         </div>
@@ -766,8 +766,8 @@ export default function Home() {
             <div className="px-5 py-4 sm:px-7 sm:py-5 md:px-8 md:py-6">
               <div className="flex items-start justify-between mb-5">
                 <div>
-                  <p className="text-amber-700 text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-1">Napište mi</p>
-                  <h2 id="poptavka-title" className="text-xl sm:text-2xl md:text-3xl font-black leading-tight">Přijedu se podívat</h2>
+                  <p className="text-amber-700 text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-1">Napište nám</p>
+                  <h2 id="poptavka-title" className="text-xl sm:text-2xl md:text-3xl font-black leading-tight">Přijedeme se podívat</h2>
                 </div>
                 <button onClick={() => setOpen(false)} aria-label="Zavřít" className="w-8 h-8 flex items-center justify-center text-stone-400 hover:text-stone-900 text-2xl ml-4 shrink-0 mt-0.5">×</button>
               </div>
@@ -776,13 +776,13 @@ export default function Home() {
                 <div className="py-6 text-center">
                   <div className="mx-auto mb-4 w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-2xl text-green-600">✓</div>
                   <h3 className="text-xl font-black mb-2">Poptávka odeslána!</h3>
-                  <p className="text-stone-500 text-sm mb-6">Děkuji, ozvu se vám co nejdříve.</p>
+                  <p className="text-stone-500 text-sm mb-6">Děkujeme, ozveme se vám co nejdříve.</p>
                   <button onClick={() => setOpen(false)} className="btn-primary">Zavřít</button>
                 </div>
               ) : (
                 <form onSubmit={odeslat} noValidate>
                   <p className="text-stone-500 text-sm mb-5 leading-relaxed">
-                    Napište jméno a telefon nebo e-mail. Ozvu se co nejdřív a domluvíme zaměření — zdarma, bez závazku.
+                    Napište jméno a telefon nebo e-mail. Ozveme se co nejdřív a domluvíme zaměření — zdarma, bez závazku.
                   </p>
 
                   <div className="space-y-3">
@@ -813,7 +813,7 @@ export default function Home() {
                   )}
 
                   <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                    <p className="text-stone-400 text-xs sm:text-sm">Ozývám se zpravidla ještě ten den.</p>
+                    <p className="text-stone-400 text-xs sm:text-sm">Ozýváme se zpravidla ještě ten den.</p>
                     <button type="submit" disabled={status === "sending"} className="btn-primary disabled:opacity-60 disabled:cursor-not-allowed shrink-0">
                       {status === "sending" ? "Odesílám…" : "Odeslat poptávku"}
                     </button>

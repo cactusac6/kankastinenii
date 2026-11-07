@@ -16,7 +16,7 @@ export default function CookieConsent() {
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <p className="text-sm text-stone-300 leading-relaxed flex-1">
           Tento web sám o sobě nepoužívá sledovací ani marketingové cookies. Pro zobrazení mapy
-          používám vložený Google Maps, který po vašem souhlasu může nastavit cookies třetí
+          používáme vložený Google Maps, který po vašem souhlasu může nastavit cookies třetí
           strany. Více v{" "}
           <a href="/ochrana-osobnich-udaju" className="underline hover:text-white">
             zásadách ochrany osobních údajů
@@ -34,7 +34,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => setConsent("all")}
-            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-sm font-semibold transition-colors"
+            className="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-sm font-semibold transition-colors"
           >
             Povolit vše
           </button>
