@@ -8,6 +8,7 @@ import { faqs, YEAR_FOUNDED } from "@/lib/faqs";
 const NAV = [["#", "Domů"], ["#sluzby", "Služby"], ["#o-nas", "O nás"], ["#kontakt", "Kontakt"]];
 
 const FATHER_YEARS = new Date().getFullYear() - YEAR_FOUNDED;
+const JAN_YEARS = new Date().getFullYear() - 2018;
 
 function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -183,14 +184,22 @@ export default function Home() {
     { img: "https://images.pexels.com/photos/15021456/pexels-photo-15021456.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Horizontální žaluzie", s: "Hliník nebo dřevo, v jakékoli barvě." },
     { img: "https://images.pexels.com/photos/16153504/pexels-photo-16153504.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Rolety den a noc", s: "Přes den světlo, večer tma a soukromí." },
     { img: "https://images.pexels.com/photos/17756267/pexels-photo-17756267.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Sítě proti hmyzu", s: "Rámové i rolovací. Větrá se, komáři ne." },
-    { img: "https://images.pexels.com/photos/5691516/pexels-photo-5691516.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Servis a opravy", s: "Nefunguje žaluzie, roleta nebo markýza? Opravím i to, co jiní vyhodí." },
+    { img: "https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Servis a opravy", s: "Nefunguje žaluzie, roleta nebo markýza? Opravím i to, co jiní vyhodí." },
   ];
 
   const steps = [
-    { n: "01", t: "Napíšete nebo zavoláte", s: "Řeknete mi, jaká máte okna a co potřebujete." },
-    { n: "02", t: "Přijedu změřit", s: "Rozměry beru přímo na místě, žádné odhady." },
-    { n: "03", t: "Dostanete cenu", s: "Konkrétní částka, bez skrytých poplatků a bez závazku." },
-    { n: "04", t: "Namontujeme", s: "Přijedeme s otcem s materiálem. Po sobě uklidíme." },
+    { n: "01", t: "Kontaktujete nás", s: "Napíšete nebo zavoláte — řeknete, jaká máte okna a co potřebujete." },
+    { n: "02", t: "Zaměříme", s: "Přijedeme k vám a rozměry vezmeme přímo na místě, žádné odhady." },
+    { n: "03", t: "Pošleme cenovou nabídku", s: "Konkrétní částka podle zaměření, bez skrytých poplatků." },
+    { n: "04", t: "Objednáme materiál", s: "Když nabídku odsouhlasíte, objednáme materiál — uhradíte zálohovou fakturu předem." },
+    { n: "05", t: "Přijedeme a namontujeme", s: "Materiál dovezeme a nainstalujeme, obvykle s otcem spolu." },
+    { n: "06", t: "Doplatíte po dokončení", s: "Zbytek ceny platíte až po hotové montáži, ne dřív." },
+  ];
+
+  const trustBadges = [
+    { icon: "⚖", t: "Férové ceny" },
+    { icon: "✓", t: "Kvalitní materiály" },
+    { icon: "★", t: "Jsme perfekcionisti" },
   ];
 
   const realizace = [
@@ -210,31 +219,31 @@ export default function Home() {
 
       {/* ── SCROLL PROGRESS ── */}
       <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-transparent pointer-events-none">
-        <div className="h-full bg-orange-600 transition-[width] duration-150 ease-out" style={{ width: `${progress}%` }} />
+        <div className="h-full bg-amber-600 transition-[width] duration-150 ease-out" style={{ width: `${progress}%` }} />
       </div>
 
       {/* ── NAVBAR ── */}
       <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${scrolled ? "shadow-[0_1px_12px_rgba(0,0,0,0.07)] border-b border-stone-200" : "border-b border-transparent"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between h-[58px] md:h-[68px]">
           <a href="#" className="flex flex-col leading-none group">
-            <span className="text-[17px] md:text-xl font-bold tracking-tight group-hover:text-orange-700 transition-colors">Kaňka žaluzie</span>
+            <span className="text-[17px] md:text-xl font-bold tracking-tight group-hover:text-amber-700 transition-colors">Kaňka žaluzie</span>
             <span className="text-[10px] md:text-[11px] text-stone-400 mt-0.5">Mladá Boleslav a okolí</span>
           </a>
 
           <nav className="hidden md:flex items-center gap-7 lg:gap-9 text-[14px] lg:text-[15px] text-stone-500">
             {NAV.map(([href, label]) => (
-              <a key={label} href={href} className="relative py-1 text-stone-600 hover:text-orange-700 transition-colors after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-orange-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:rounded-full">{label}</a>
+              <a key={label} href={href} className="relative py-1 text-stone-600 hover:text-amber-700 transition-colors after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-amber-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:rounded-full">{label}</a>
             ))}
           </nav>
 
-          <a href="tel:+420776385776" className="hidden md:inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 active:scale-95 transition-all duration-150 text-white px-5 lg:px-6 py-2.5 rounded-lg font-semibold text-[14px] lg:text-[15px] shadow-[0_2px_8px_rgba(234,88,12,0.3)] hover:shadow-[0_4px_16px_rgba(234,88,12,0.4)]">
+          <a href="tel:+420776385776" className="hidden md:inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 active:scale-95 transition-all duration-150 text-white px-5 lg:px-6 py-2.5 rounded-lg font-semibold text-[14px] lg:text-[15px] shadow-[0_2px_8px_rgba(180,83,9,0.3)] hover:shadow-[0_4px_16px_rgba(146,64,14,0.4)]">
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
             776 385 776
           </a>
 
           {/* mobile */}
           <div className="flex md:hidden items-center gap-3">
-            <a href="tel:+420776385776" className="flex items-center gap-1.5 text-orange-600 font-bold text-sm">
+            <a href="tel:+420776385776" className="flex items-center gap-1.5 text-amber-600 font-bold text-sm">
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
               776 385 776
             </a>
@@ -249,15 +258,22 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className="relative pt-[58px] md:pt-[68px] bg-[#f0ebe0] overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute -top-24 -left-32 w-[420px] h-[420px] rounded-full bg-orange-300/25 blur-[100px]" />
-        <div aria-hidden className="pointer-events-none absolute top-1/3 -right-24 w-[360px] h-[360px] rounded-full bg-orange-200/30 blur-[90px]" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage: "repeating-linear-gradient(0deg, #78350f 0px, #78350f 3px, transparent 3px, transparent 26px)",
+          }}
+        />
+        <div aria-hidden className="pointer-events-none absolute -top-24 -left-32 w-[420px] h-[420px] rounded-full bg-amber-300/25 blur-[100px]" />
+        <div aria-hidden className="pointer-events-none absolute top-1/3 -right-24 w-[360px] h-[360px] rounded-full bg-amber-200/30 blur-[90px]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-[1fr_480px] xl:grid-cols-[1fr_560px] gap-0 items-center min-h-[calc(100svh-58px)] md:min-h-[calc(100svh-68px)]">
           <div className="py-12 sm:py-16 md:py-20 lg:py-24 lg:pr-14" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) both" }}>
-            <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4 sm:mb-5">
+            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4 sm:mb-5">
               Žaluzie · Rolety · Sítě
             </p>
             <h1 className="text-[40px] sm:text-[56px] md:text-[68px] xl:text-[78px] font-black leading-[0.93] tracking-tight text-stone-900">
-              Žaluzie<br />Mladá<br /><span className="text-orange-600">Boleslav</span>
+              Žaluzie<br />Mladá<br /><span className="text-amber-600">Boleslav</span>
             </h1>
             <p className="mt-5 md:mt-6 text-stone-600 text-base sm:text-lg md:text-xl leading-relaxed max-w-md">
               Jmenuji se Jan Kaňka. Žaluzie dělám od roku 2018, naučil mě to otec, který je
@@ -293,7 +309,7 @@ export default function Home() {
           >
             <div ref={heroImgRef} className="absolute inset-0 transition-transform duration-300 ease-out will-change-transform">
               <Image
-                src="https://images.pexels.com/photos/35972950/pexels-photo-35972950.jpeg?auto=compress&cs=tinysrgb&w=1400"
+                src="https://images.pexels.com/photos/36197104/pexels-photo-36197104.jpeg?auto=compress&cs=tinysrgb&w=1400"
                 alt="Žaluzie na okně"
                 fill
                 priority
@@ -307,7 +323,7 @@ export default function Home() {
           {/* hero image — mobile strip */}
           <div className="lg:hidden h-48 sm:h-60 overflow-hidden relative" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) .1s both" }}>
             <Image
-              src="https://images.pexels.com/photos/35972950/pexels-photo-35972950.jpeg?auto=compress&cs=tinysrgb&w=900"
+              src="https://images.pexels.com/photos/36197104/pexels-photo-36197104.jpeg?auto=compress&cs=tinysrgb&w=900"
               alt="Žaluzie na okně"
               fill
               priority
@@ -322,7 +338,7 @@ export default function Home() {
       {/* ── SERVICES ── */}
       <div id="sluzby" className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28 scroll-mt-16 md:scroll-mt-20">
         <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co dělám</p>
+          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co dělám</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
             Žaluzie, rolety,<br className="sm:hidden" /> sítě a servis
           </h2>
@@ -337,7 +353,7 @@ export default function Home() {
               key={idx}
               data-reveal
               style={{ transitionDelay: `${idx * 55}ms` }}
-              className="group relative rounded-xl overflow-hidden border border-stone-200 last:col-span-2 lg:last:col-span-1 hover:border-orange-300 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] bg-white cursor-default"
+              className="group relative rounded-xl overflow-hidden border border-stone-200 last:col-span-2 lg:last:col-span-1 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] bg-white cursor-default"
             >
               <div className="aspect-[3/4] overflow-hidden bg-stone-100 relative">
                 <Image
@@ -361,19 +377,30 @@ export default function Home() {
       <div className="bg-[#f0ebe0] border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24">
           <div className="mb-10 md:mb-16" data-reveal>
-            <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Jak to funguje</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">Od zprávy<br />k hotové montáži</h2>
+            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Jak probíhá spolupráce</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">Od kontaktu<br />po doplatek</h2>
+            <p className="mt-4 text-stone-500 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
+              Žádné platby dopředu za celou zakázku — materiál objednáme až po vašem souhlasu
+              s cenou a doplácíte, až když je montáž hotová.
+            </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 md:gap-10">
             {steps.map((step, idx) => (
-              <div key={idx} data-reveal style={{ transitionDelay: `${idx * 80}ms` }} className="relative">
-                {idx < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-7 left-[60%] right-0 h-px bg-stone-300/60" />
+              <div key={idx} data-reveal style={{ transitionDelay: `${idx * 70}ms` }} className="relative">
+                {idx < steps.length - 1 && (idx + 1) % 3 !== 0 && (
+                  <div className="hidden sm:block absolute top-7 left-[60%] right-0 h-px bg-stone-300/60" />
                 )}
-                <p className="text-[52px] sm:text-[60px] font-black leading-none text-stone-400 select-none mb-3 md:mb-4">{step.n}</p>
+                <p className="text-[44px] sm:text-[52px] font-black leading-none text-stone-400 select-none mb-3 md:mb-4">{step.n}</p>
                 <h3 className="text-sm sm:text-base md:text-lg font-bold text-stone-900 mb-1.5">{step.t}</h3>
                 <p className="text-stone-500 text-[13px] sm:text-sm md:text-[15px] leading-relaxed">{step.s}</p>
               </div>
+            ))}
+          </div>
+          <div className="mt-10 md:mt-14 flex flex-wrap gap-3 md:gap-4" data-reveal>
+            {trustBadges.map((b) => (
+              <span key={b.t} className="inline-flex items-center gap-2 bg-white border border-stone-200 rounded-full pl-3 pr-4 py-2 text-xs sm:text-sm font-semibold text-stone-800">
+                <span className="text-amber-600">{b.icon}</span> {b.t}
+              </span>
             ))}
           </div>
         </div>
@@ -382,7 +409,7 @@ export default function Home() {
       {/* ── REALIZACE ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
         <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Ukázka práce</p>
+          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Ukázka práce</p>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-black leading-tight">
             Historická okna —<br className="hidden sm:block" /> přes 3 metry výšky
           </h2>
@@ -425,7 +452,7 @@ export default function Home() {
       <div id="o-nas" className="bg-[#f0ebe0] border-y border-stone-200 scroll-mt-16 md:scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           <div data-reveal className="order-2 lg:order-1">
-            <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kdo jsem</p>
+            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kdo jsem</p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-5 md:mb-6">
               Jan Kaňka<br />z Kosmonos
             </h2>
@@ -447,15 +474,15 @@ export default function Home() {
                 <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">maximální dojezd</p>
               </div>
               <div>
-                <p className="text-2xl sm:text-3xl font-black">od 2018</p>
-                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">dělám žaluzie já</p>
+                <p className="text-2xl sm:text-3xl font-black"><AnimatedNumber value={JAN_YEARS} suffix=" let" /></p>
+                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">moje praxe v oboru</p>
               </div>
             </div>
           </div>
           <div data-reveal className="order-1 lg:order-2 rounded-xl overflow-hidden h-[240px] sm:h-[340px] md:h-[460px] bg-stone-200 relative">
             <Image
-              src="https://images.pexels.com/photos/8787526/pexels-photo-8787526.jpeg?auto=compress&cs=tinysrgb&w=1000"
-              alt="Montáž žaluzií"
+              src="/realizace/montaz.jpeg"
+              alt="Jan Kaňka při montáži rolety na vysoké okno"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
@@ -467,7 +494,7 @@ export default function Home() {
       {/* ── PŮSOBNOST ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
         <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kde jezdím</p>
+          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kde jezdím</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
             Mladá Boleslav<br />a okolí do 50 km
           </h2>
@@ -477,14 +504,14 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
           {regions.map((r, idx) => (
-            <div key={idx} data-reveal style={{ transitionDelay: `${idx * 70}ms` }} className="rounded-xl border border-stone-200 bg-white p-5 md:p-6 hover:border-orange-200 transition-colors duration-200">
+            <div key={idx} data-reveal style={{ transitionDelay: `${idx * 70}ms` }} className="rounded-xl border border-stone-200 bg-white p-5 md:p-6 hover:border-amber-200 transition-colors duration-200">
               <h3 className="font-bold text-sm md:text-base text-stone-900 mb-4 flex items-center gap-2">
-                <span className="text-orange-600 text-base">📍</span> {r.kraj}
+                <span className="text-amber-600 text-base">📍</span> {r.kraj}
               </h3>
               <ul className="space-y-1.5 md:space-y-2">
                 {r.mesta.map((m) => (
                   <li key={m} className="flex items-center gap-2 text-stone-600 text-[13px] md:text-[15px]">
-                    <span className="w-1 h-1 rounded-full bg-orange-500 shrink-0" />
+                    <span className="w-1 h-1 rounded-full bg-amber-500 shrink-0" />
                     {m}
                   </li>
                 ))}
@@ -501,7 +528,7 @@ export default function Home() {
       <div className="bg-[#f0ebe0] border-y border-stone-200">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24">
           <div className="mb-10 md:mb-14" data-reveal>
-            <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co se lidé ptají</p>
+            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co se lidé ptají</p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">Nejčastější<br />otázky</h2>
           </div>
           <div className="space-y-2.5 md:space-y-3">
@@ -509,7 +536,7 @@ export default function Home() {
               const isOpen = openFaq === idx;
               return (
                 <div key={idx} data-reveal style={{ transitionDelay: `${idx * 45}ms` }}>
-                <div className={`rounded-xl border bg-white transition-colors duration-200 ${isOpen ? "border-orange-300" : "border-stone-200 hover:border-stone-300"}`}>
+                <div className={`rounded-xl border bg-white transition-colors duration-200 ${isOpen ? "border-amber-300" : "border-stone-200 hover:border-stone-300"}`}>
                   <button
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
@@ -517,7 +544,7 @@ export default function Home() {
                     className="w-full flex items-center justify-between gap-4 px-5 py-4 md:px-6 md:py-5 text-left"
                   >
                     <span className="font-semibold text-sm sm:text-base md:text-lg text-stone-900 leading-snug">{item.q}</span>
-                    <span className={`shrink-0 w-6 h-6 rounded-full border border-stone-300 flex items-center justify-center text-orange-600 text-lg font-light transition-transform duration-300 ${isOpen ? "rotate-45 border-orange-300 bg-orange-50" : ""}`}>+</span>
+                    <span className={`shrink-0 w-6 h-6 rounded-full border border-stone-300 flex items-center justify-center text-amber-600 text-lg font-light transition-transform duration-300 ${isOpen ? "rotate-45 border-amber-300 bg-amber-50" : ""}`}>+</span>
                   </button>
                   <div className="grid transition-[grid-template-rows] duration-300 ease-out" style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}>
                     <div className="overflow-hidden">
@@ -535,7 +562,7 @@ export default function Home() {
       {/* ── PROČ MY ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
         <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Proč my dva</p>
+          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Proč my dva</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">Co od nás<br />čekat</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
@@ -557,30 +584,30 @@ export default function Home() {
       <div id="kontakt" className="bg-[#f0ebe0] border-y border-stone-200 scroll-mt-16 md:scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
           <div data-reveal>
-            <p className="text-orange-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kontakt</p>
+            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kontakt</p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-8">Napište mi<br />nebo zavolejte</h2>
             <div className="space-y-5">
               <a href="tel:+420776385776" className="flex items-center gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center shrink-0 group-hover:bg-orange-200 transition-colors">
-                  <svg className="w-5 h-5 text-orange-700" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
+                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
                 </div>
                 <div>
                   <p className="text-[11px] text-stone-400 uppercase tracking-wider">Telefon</p>
-                  <p className="font-bold text-lg text-stone-900 group-hover:text-orange-700 transition-colors">776 385 776</p>
+                  <p className="font-bold text-lg text-stone-900 group-hover:text-amber-700 transition-colors">776 385 776</p>
                 </div>
               </a>
               <a href="mailto:jankanka6@seznam.cz" className="flex items-center gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center shrink-0 group-hover:bg-orange-200 transition-colors">
-                  <svg className="w-5 h-5 text-orange-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
+                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 </div>
                 <div>
                   <p className="text-[11px] text-stone-400 uppercase tracking-wider">E-mail</p>
-                  <p className="font-bold text-base text-stone-900 group-hover:text-orange-700 transition-colors break-all">jankanka6@seznam.cz</p>
+                  <p className="font-bold text-base text-stone-900 group-hover:text-amber-700 transition-colors break-all">jankanka6@seznam.cz</p>
                 </div>
               </a>
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-orange-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
+                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
                 <div>
                   <p className="text-[11px] text-stone-400 uppercase tracking-wider">Sídlo</p>
@@ -588,8 +615,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-orange-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
+                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
                 <div>
                   <p className="text-[11px] text-stone-400 uppercase tracking-wider">Pracovní doba</p>
@@ -623,7 +650,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setConsent("all")}
-                  className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold transition-colors"
+                  className="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold transition-colors"
                 >
                   Povolit a zobrazit mapu
                 </button>
@@ -631,7 +658,7 @@ export default function Home() {
                   href="https://www.google.com/maps?q=Kosmonosy+293+06"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-orange-700 text-xs underline hover:text-orange-800"
+                  className="text-amber-700 text-xs underline hover:text-amber-800"
                 >
                   Nebo otevřít mapu v Google Maps
                 </a>
@@ -642,19 +669,19 @@ export default function Home() {
       </div>
 
       {/* ── CTA PRUH ── */}
-      <div className="relative overflow-hidden bg-orange-600">
+      <div className="relative overflow-hidden bg-amber-600">
         <div aria-hidden className="pointer-events-none absolute -bottom-20 left-1/4 w-[320px] h-[320px] rounded-full bg-white/10 blur-[80px]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-12 md:py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-8">
           <div>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white">Chcete cenovou nabídku?</h2>
-            <p className="mt-1 text-orange-100 text-sm sm:text-base">Zavolejte nebo napište — zaměření je zdarma.</p>
+            <p className="mt-1 text-amber-100 text-sm sm:text-base">Zavolejte nebo napište — zaměření je zdarma.</p>
           </div>
           <div className="flex flex-col md:flex-row gap-3 w-full sm:w-auto shrink-0">
-            <a href="tel:+420776385776" className="flex items-center justify-center gap-2 bg-white text-orange-700 hover:bg-orange-50 active:scale-95 transition-all font-bold text-sm sm:text-base px-6 py-3.5 rounded-lg whitespace-nowrap shadow-sm">
+            <a href="tel:+420776385776" className="flex items-center justify-center gap-2 bg-white text-amber-700 hover:bg-amber-50 active:scale-95 transition-all font-bold text-sm sm:text-base px-6 py-3.5 rounded-lg whitespace-nowrap shadow-sm">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
               776 385 776
             </a>
-            <button onClick={openModal} className="flex items-center justify-center border border-white/40 hover:bg-orange-700 active:scale-95 transition-all text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-lg whitespace-nowrap">
+            <button onClick={openModal} className="flex items-center justify-center border border-white/40 hover:bg-amber-700 active:scale-95 transition-all text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-lg whitespace-nowrap">
               Napsat poptávku
             </button>
           </div>
@@ -676,7 +703,7 @@ export default function Home() {
           </div>
           <div>
             <h4 className="text-stone-400 text-[10px] font-semibold uppercase tracking-widest mb-4">Kontakt</h4>
-            <a href="tel:+420776385776" className="block text-white hover:text-orange-400 transition-colors font-semibold mb-2 text-sm">776 385 776</a>
+            <a href="tel:+420776385776" className="block text-white hover:text-amber-400 transition-colors font-semibold mb-2 text-sm">776 385 776</a>
             <a href="mailto:jankanka6@seznam.cz" className="block text-stone-400 hover:text-white transition-colors text-sm mb-4 break-all">jankanka6@seznam.cz</a>
             <p className="text-stone-400 text-sm"><span className="text-stone-300 font-medium block">Pracovní doba</span>Po–Ne 9:00–19:00</p>
           </div>
@@ -710,11 +737,11 @@ export default function Home() {
             </div>
             <div className="flex flex-col flex-1 px-5 pt-4">
               {NAV.map(([href, label]) => (
-                <a key={label} onClick={() => setMenu(false)} href={href} className="py-3.5 text-base font-medium border-b border-stone-100 text-stone-700 hover:text-orange-700 transition-colors">{label}</a>
+                <a key={label} onClick={() => setMenu(false)} href={href} className="py-3.5 text-base font-medium border-b border-stone-100 text-stone-700 hover:text-amber-700 transition-colors">{label}</a>
               ))}
             </div>
             <div className="p-5">
-              <a href="tel:+420776385776" className="flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white text-base font-bold px-6 py-4 rounded-xl w-full transition-colors">
+              <a href="tel:+420776385776" className="flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-base font-bold px-6 py-4 rounded-xl w-full transition-colors">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
                 776 385 776
               </a>
@@ -739,7 +766,7 @@ export default function Home() {
             <div className="px-5 py-4 sm:px-7 sm:py-5 md:px-8 md:py-6">
               <div className="flex items-start justify-between mb-5">
                 <div>
-                  <p className="text-orange-700 text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-1">Napište mi</p>
+                  <p className="text-amber-700 text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-1">Napište mi</p>
                   <h2 id="poptavka-title" className="text-xl sm:text-2xl md:text-3xl font-black leading-tight">Přijedu se podívat</h2>
                 </div>
                 <button onClick={() => setOpen(false)} aria-label="Zavřít" className="w-8 h-8 flex items-center justify-center text-stone-400 hover:text-stone-900 text-2xl ml-4 shrink-0 mt-0.5">×</button>
@@ -860,10 +887,10 @@ export default function Home() {
       {/* ── STICKY MOBILE CTA ── */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 flex border-t border-stone-200 bg-white/95 backdrop-blur-sm shadow-[0_-4px_16px_rgba(0,0,0,0.08)]" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
         <a href="tel:+420776385776" className="flex-1 flex items-center justify-center gap-2 py-3.5 text-stone-700 font-semibold text-sm border-r border-stone-200 active:bg-stone-50">
-          <svg className="w-4 h-4 text-orange-600" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          <svg className="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
           Zavolat
         </a>
-        <button onClick={openModal} className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-orange-600 active:bg-orange-700 text-white font-bold text-sm">
+        <button onClick={openModal} className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-amber-600 active:bg-amber-700 text-white font-bold text-sm">
           Nezávazná poptávka
         </button>
       </div>
@@ -871,16 +898,16 @@ export default function Home() {
       <style>{`
         .btn-primary {
           display: inline-flex; align-items: center; justify-content: center;
-          background: #ea580c; color: white; padding: 14px 28px; border-radius: 10px;
+          background: #b45309; color: white; padding: 14px 28px; border-radius: 6px;
           font-weight: 700; font-size: 15px; transition: background .15s, transform .1s, box-shadow .15s;
-          box-shadow: 0 2px 8px rgba(234,88,12,.28); cursor: pointer; border: none;
+          box-shadow: 3px 3px 0 #1c1917; cursor: pointer; border: none;
         }
-        .btn-primary:hover { background: #c2410c; box-shadow: 0 4px 18px rgba(234,88,12,.38); }
-        .btn-primary:active { transform: scale(.97); }
+        .btn-primary:hover { background: #92400e; transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #1c1917; }
+        .btn-primary:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #1c1917; }
         .btn-secondary {
           display: inline-flex; align-items: center; justify-content: center;
           border: 1.5px solid #d6d3cd; background: white; color: #1c1917;
-          padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 15px;
+          padding: 14px 28px; border-radius: 6px; font-weight: 600; font-size: 15px;
           transition: border-color .15s, background .15s, transform .1s; cursor: pointer;
         }
         .btn-secondary:hover { border-color: #a8a29e; background: #faf8f5; }
@@ -890,7 +917,7 @@ export default function Home() {
           background: #faf9f7; padding: 12px 14px; font-size: 14px; color: #1c1917;
           outline: none; transition: border-color .15s, background .15s;
         }
-        .input-field:focus { border-color: #ea580c; background: white; }
+        .input-field:focus { border-color: #b45309; background: white; }
         .input-field::placeholder { color: #a8a29e; }
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
         @keyframes heroIn {
