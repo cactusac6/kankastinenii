@@ -1,17 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Fraunces } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "./components/CookieConsent";
 import { faqs } from "@/lib/faqs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin", "latin-ext"],
 });
 
 const siteUrl = "https://kankastineni.cz";
@@ -169,12 +169,8 @@ export default function RootLayout({
     <html
       lang="cs"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      className={`${geistSans.variable} ${fraunces.variable} h-full antialiased scroll-smooth`}
     >
-      <head>
-        <link rel="preconnect" href="https://images.pexels.com" />
-        <link rel="dns-prefetch" href="https://images.pexels.com" />
-      </head>
       <body className="min-h-full flex flex-col bg-[#faf8f5]">
         <script
           type="application/ld+json"

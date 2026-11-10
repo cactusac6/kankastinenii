@@ -8,34 +8,6 @@ import { faqs, YEAR_FOUNDED } from "@/lib/faqs";
 const NAV = [["#", "Domů"], ["#sluzby", "Služby"], ["#o-nas", "O nás"], ["#kontakt", "Kontakt"]];
 
 const FATHER_YEARS = new Date().getFullYear() - YEAR_FOUNDED;
-const JAN_YEARS = new Date().getFullYear() - 2018;
-
-function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(0);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        io.unobserve(el);
-        const duration = 1200;
-        const start = performance.now();
-        const tick = (now: number) => {
-          const p = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - p, 4);
-          setDisplay(Math.round(eased * value));
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      });
-    }, { threshold: 0.4 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [value]);
-  return <span ref={ref}>{display}{suffix}</span>;
-}
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -44,7 +16,6 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
-  const [progress, setProgress] = useState(0);
   const [showTop, setShowTop] = useState(false);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -130,24 +101,9 @@ export default function Home() {
   }, [open]);
 
   useEffect(() => {
-    const els = document.querySelectorAll("[data-reveal]");
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add("reveal-in"); io.unobserve(e.target); }
-      }),
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
       setShowTop(window.scrollY > 800);
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      setProgress(max > 0 ? (window.scrollY / max) * 100 : 0);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -166,26 +122,22 @@ export default function Home() {
   }, [lightbox]);
 
   const services = [
-    { img: "https://images.pexels.com/photos/9270061/pexels-photo-9270061.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Vertikální žaluzie", s: "Velká okna, kanceláře, prosklené stěny." },
-    { img: "https://images.pexels.com/photos/15021456/pexels-photo-15021456.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Horizontální žaluzie", s: "Hliník nebo dřevo, v jakékoli barvě." },
-    { img: "https://images.pexels.com/photos/16153504/pexels-photo-16153504.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Rolety den a noc", s: "Přes den světlo, večer tma a soukromí." },
-    { img: "https://images.pexels.com/photos/17756267/pexels-photo-17756267.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Sítě proti hmyzu", s: "Rámové i rolovací. Větrá se, komáři ne." },
-    { img: "https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=800", t: "Servis a opravy", s: "Nefunguje žaluzie, roleta nebo markýza? Opravíme i to, co jiní vyhodí." },
+    ["Vertikální žaluzie", "Velká okna, prosklené stěny, kanceláře."],
+    ["Horizontální žaluzie", "Hliníkové i dřevěné, na míru a v libovolné barvě."],
+    ["Rolety den a noc", "Přes den světlo, večer tma."],
+    ["Plisé a japonské stěny", "Na šikmá okna, střešní okna i jako příčka v místnosti."],
+    ["Markýzy a garážová vrata", "Montáž i servis."],
+    ["Sítě proti hmyzu", "Rámové do okna, rolovací do dveří."],
+    ["Opravy", "Zasekla se roleta, praskla šňůrka, nejde markýza? Většinou to jde spravit a nové nekupujete."],
   ];
 
   const steps = [
-    { n: "01", t: "Kontaktujete nás", s: "Napíšete nebo zavoláte — řeknete, jaká máte okna a co potřebujete." },
-    { n: "02", t: "Zaměříme", s: "Přijedeme k vám a rozměry vezmeme přímo na místě, žádné odhady." },
-    { n: "03", t: "Pošleme cenovou nabídku", s: "Konkrétní částka podle zaměření, bez skrytých poplatků." },
-    { n: "04", t: "Objednáme materiál", s: "Když nabídku odsouhlasíte, objednáme materiál — uhradíte zálohovou fakturu předem." },
-    { n: "05", t: "Přijedeme a namontujeme", s: "Materiál dovezeme a nainstalujeme, obvykle s otcem spolu." },
-    { n: "06", t: "Doplatíte po dokončení", s: "Zbytek ceny platíte až po hotové montáži, ne dřív." },
-  ];
-
-  const trustBadges = [
-    { icon: "⚖", t: "Férové ceny" },
-    { icon: "✓", t: "Kvalitní materiály" },
-    { icon: "★", t: "Jsme perfekcionisti" },
+    ["Ozvete se", "Zavoláte nebo napíšete, jaká máte okna a co byste chtěli."],
+    ["Přijedeme zaměřit", "Rozměry bereme na místě. Zdarma a bez závazku."],
+    ["Pošleme cenu", "Konkrétní částka podle zaměření."],
+    ["Objednáme materiál", "Až když cenu odsouhlasíte. Za materiál platíte zálohovou fakturou."],
+    ["Namontujeme", "Přijedeme spolu s tátou, obvykle zabere jedno odpoledne."],
+    ["Doplatíte", "Zbytek až po hotové montáži."],
   ];
 
   const realizace = [
@@ -195,18 +147,13 @@ export default function Home() {
   ];
 
   const regions = [
-    { kraj: "Středočeský kraj", mesta: ["Mladá Boleslav", "Kosmonosy", "Bakov nad Jizerou", "Benátky nad Jizerou", "Mnichovo Hradiště", "Dobrovice", "Bělá pod Bezdězem", "Nymburk", "Lysá nad Labem", "Brandýs nad Labem", "Mělník", "Luštěnice"] },
-    { kraj: "Liberecký kraj", mesta: ["Turnov", "Český Dub", "Semily", "Železný Brod", "Liberec", "Jilemnice"] },
-    { kraj: "Královéhradecký kraj", mesta: ["Jičín", "Sobotka", "Kopidlno", "Hořice", "Nová Paka"] },
+    ["Středočeský kraj", "Mladá Boleslav, Kosmonosy, Bakov nad Jizerou, Benátky nad Jizerou, Mnichovo Hradiště, Dobrovice, Bělá pod Bezdězem, Nymburk, Lysá nad Labem, Brandýs nad Labem, Mělník, Luštěnice"],
+    ["Liberecký kraj", "Turnov, Český Dub, Semily, Železný Brod, Liberec, Jilemnice"],
+    ["Královéhradecký kraj", "Jičín, Sobotka, Kopidlno, Hořice, Nová Paka"],
   ];
 
   return (
     <main className="bg-[#faf8f5] text-stone-900 overflow-x-hidden">
-
-      {/* ── SCROLL PROGRESS ── */}
-      <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-transparent pointer-events-none">
-        <div className="h-full bg-amber-600 transition-[width] duration-150 ease-out" style={{ width: `${progress}%` }} />
-      </div>
 
       {/* ── NAVBAR ── */}
       <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${scrolled ? "shadow-[0_1px_12px_rgba(0,0,0,0.07)] border-b border-stone-200" : "border-b border-transparent"}`}>
@@ -280,15 +227,12 @@ export default function Home() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 min-h-[calc(100svh-58px)] md:min-h-[calc(100svh-68px)] flex items-center">
           <div className="py-16 sm:py-20 md:py-24 max-w-xl" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) both" }}>
-            <p className="text-amber-400 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4 sm:mb-5">
-              Žaluzie · Rolety · Sítě
-            </p>
-            <h1 className="text-[40px] sm:text-[56px] md:text-[68px] xl:text-[78px] font-black leading-[0.93] tracking-tight text-white">
+            <h1 className="font-serif text-[44px] sm:text-[60px] md:text-[72px] xl:text-[84px] font-semibold leading-[0.95] tracking-tight text-white">
               Žaluzie<br />Mladá<br /><span className="text-amber-500">Boleslav</span>
             </h1>
             <p className="mt-5 md:mt-6 text-stone-200 text-base sm:text-lg md:text-xl leading-relaxed max-w-md">
-              Jsme Kaňka stínění — žaluzie, rolety a sítě prodáváme, montujeme a opravujeme
-              už {FATHER_YEARS} let. Táta s tím začal v roce {YEAR_FOUNDED}, dnes jezdíme na zakázky spolu jako otec a syn.
+              Žaluzie, rolety a sítě proti hmyzu. Táta je montuje od roku {YEAR_FOUNDED}, já s ním jezdím od roku 2018.
+              Zaměříme, namontujeme i opravíme.
             </p>
             <div className="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3">
               <button
@@ -301,98 +245,64 @@ export default function Home() {
                 Naše služby
               </a>
             </div>
-            <div className="mt-8 md:mt-10 pt-7 md:pt-8 border-t border-white/20 grid grid-cols-3 gap-4 sm:gap-6">
-              {[[`${FATHER_YEARS} let`, "na trhu"], ["50 km", "dojezd od Kosmonos"], ["Zdarma", "zaměření"]].map(([val, label]) => (
-                <div key={label}>
-                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-white">{val}</p>
-                  <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 leading-snug">{label}</p>
-                </div>
-              ))}
-            </div>
+            <p className="mt-8 text-stone-300 text-sm">
+              Zaměření zdarma · jezdíme do 50 km od Kosmonos
+            </p>
           </div>
         </div>
       </section>
 
       {/* ── SERVICES ── */}
-      <div id="sluzby" className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28 scroll-mt-16 md:scroll-mt-20">
-        <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co děláme</p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
-            Žaluzie, rolety,<br className="sm:hidden" /> sítě a servis
+      <div id="sluzby" className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28 scroll-mt-16 md:scroll-mt-20 grid lg:grid-cols-[1fr_1.6fr] gap-8 lg:gap-20">
+        <div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
+            Co děláme
           </h2>
-          <p className="mt-4 text-stone-500 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed">
-            Montujeme a opravujeme žaluzie, rolety, markýzy, plisé, japonské stěny, sítě proti hmyzu
-            i garážová vrata. Co jde opravit, radši opravíme, než abyste kupovali nové.
+          <p className="mt-4 text-stone-600 text-base md:text-lg max-w-sm leading-relaxed">
+            Montáž a servis stínicí techniky v bytech, domech, kancelářích i ve starých budovách.
           </p>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 lg:gap-5">
-          {services.map((c, idx) => (
-            <div
-              key={idx}
-              data-reveal
-              style={{ transitionDelay: `${idx * 55}ms` }}
-              className="group relative rounded-xl overflow-hidden border border-stone-200 last:col-span-2 lg:last:col-span-1 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] bg-white cursor-default"
-            >
-              <div className="aspect-[3/4] overflow-hidden bg-stone-100 relative">
-                <Image
-                  src={c.img}
-                  alt={c.t}
-                  fill
-                  sizes="(min-width: 1024px) 20vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-3 sm:p-4">
-                <h3 className="font-bold text-[13px] sm:text-sm md:text-base text-stone-900 leading-snug">{c.t}</h3>
-                <p className="text-stone-500 text-[11px] sm:text-xs md:text-sm leading-relaxed mt-1 hidden sm:block">{c.s}</p>
-              </div>
+        <dl className="border-t border-stone-300">
+          {services.map(([t, d]) => (
+            <div key={t} className="grid sm:grid-cols-[14rem_1fr] gap-x-6 gap-y-1 py-4 md:py-5 border-b border-stone-300">
+              <dt className="font-serif text-lg md:text-xl font-semibold text-stone-900">{t}</dt>
+              <dd className="text-stone-600 text-[15px] md:text-base leading-relaxed">{d}</dd>
             </div>
           ))}
-        </div>
+        </dl>
       </div>
 
       {/* ── JAK TO FUNGUJE ── */}
       <div className="bg-[#f0ebe0] border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24">
-          <div className="mb-10 md:mb-16" data-reveal>
-            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Jak probíhá spolupráce</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">Od kontaktu<br />po doplatek</h2>
-            <p className="mt-4 text-stone-500 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
-              Žádné platby dopředu za celou zakázku — materiál objednáme až po vašem souhlasu
-              s cenou a doplácíte, až když je montáž hotová.
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid lg:grid-cols-[1fr_1.6fr] gap-8 lg:gap-20">
+          <div>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">Jak to probíhá</h2>
+            <p className="mt-4 text-stone-600 text-base md:text-lg max-w-sm leading-relaxed">
+              Celou částku nikdo dopředu nechce. Materiál objednáváme po vašem souhlasu s cenou a doplácíte po montáži.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 md:gap-10">
-            {steps.map((step, idx) => (
-              <div key={idx} data-reveal style={{ transitionDelay: `${idx * 70}ms` }} className="relative">
-                {idx < steps.length - 1 && (idx + 1) % 3 !== 0 && (
-                  <div className="hidden sm:block absolute top-7 left-[60%] right-0 h-px bg-stone-300/60" />
-                )}
-                <p className="text-[44px] sm:text-[52px] font-black leading-none text-stone-400 select-none mb-3 md:mb-4">{step.n}</p>
-                <h3 className="text-sm sm:text-base md:text-lg font-bold text-stone-900 mb-1.5">{step.t}</h3>
-                <p className="text-stone-500 text-[13px] sm:text-sm md:text-[15px] leading-relaxed">{step.s}</p>
-              </div>
+          <ol className="space-y-5 md:space-y-6">
+            {steps.map(([t, d], idx) => (
+              <li key={t} className="grid grid-cols-[2rem_1fr] gap-3">
+                <span className="font-serif text-xl text-amber-700 leading-snug">{idx + 1}.</span>
+                <div>
+                  <h3 className="font-semibold text-stone-900 text-base md:text-lg">{t}</h3>
+                  <p className="text-stone-600 text-[15px] md:text-base leading-relaxed">{d}</p>
+                </div>
+              </li>
             ))}
-          </div>
-          <div className="mt-10 md:mt-14 flex flex-wrap gap-3 md:gap-4" data-reveal>
-            {trustBadges.map((b) => (
-              <span key={b.t} className="inline-flex items-center gap-2 bg-white border border-stone-200 rounded-full pl-3 pr-4 py-2 text-xs sm:text-sm font-semibold text-stone-800">
-                <span className="text-amber-600">{b.icon}</span> {b.t}
-              </span>
-            ))}
-          </div>
+          </ol>
         </div>
       </div>
 
       {/* ── REALIZACE ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
-        <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Ukázka práce</p>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black leading-tight">
-            Historická okna —<br className="hidden sm:block" /> přes 3 metry výšky
+        <div className="mb-10 md:mb-14">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
+            Vysoká okna, starý dům
           </h2>
-          <p className="mt-4 text-stone-500 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
-            Starší budova, vysoká okna, montáž ze žebříku.
+          <p className="mt-4 text-stone-600 text-base md:text-lg max-w-xl leading-relaxed">
+            Poslední větší zakázka: historická okna přes tři metry. Roletu jsme montovali ze žebříku.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
@@ -401,21 +311,17 @@ export default function Home() {
               key={idx}
               type="button"
               onClick={() => setLightbox(idx)}
-              data-reveal
-              style={{ transitionDelay: `${idx * 80}ms` }}
-              className="group text-left rounded-xl overflow-hidden border border-stone-200 hover:border-stone-300 transition-all duration-300 hover:shadow-md cursor-zoom-in"
+             
+              className="group text-left rounded-xl overflow-hidden border border-stone-200 hover:border-stone-300 transition-all duration-300 cursor-zoom-in"
             >
-              <div className="h-[220px] sm:h-[300px] md:h-[360px] overflow-hidden bg-stone-100 relative">
+              <div className="h-[260px] sm:h-[300px] md:h-[360px] overflow-hidden bg-stone-100 relative">
                 <Image
                   src={r.img}
                   alt={r.t}
                   fill
                   sizes="(min-width: 640px) 33vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-stone-700 text-lg">⤢</span>
-                </div>
               </div>
               <div className="p-4 md:p-5 bg-white">
                 <h3 className="font-bold text-sm md:text-base mb-1">{r.t}</h3>
@@ -429,35 +335,20 @@ export default function Home() {
       {/* ── O NÁS ── */}
       <div id="o-nas" className="bg-[#f0ebe0] border-y border-stone-200 scroll-mt-16 md:scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
-          <div data-reveal className="order-2 lg:order-1">
-            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kdo jsme</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-5 md:mb-6">
-              Otec a syn<br />z Kosmonos
+          <div className="order-2 lg:order-1">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-5 md:mb-6">
+              Táta a já
             </h2>
-            <p className="text-stone-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4">
-              Jsme Kaňka stínění — otec v oboru začal v roce {YEAR_FOUNDED}, já (Jan) jsem se přidal v roce 2018
-              a na zakázky jezdíme spolu dodnes.
+            <p className="text-stone-800 text-base md:text-lg leading-relaxed mb-4">
+              Táta dělá žaluzie od roku {YEAR_FOUNDED}. Já jsem se k němu přidal v roce 2018, takže už spolu jezdíme
+              pár let. Jmenuju se Jan Kaňka a firma je moje, ale většinu fíglů ohledně montáže jsem se naučil od něj.
             </p>
-            <p className="text-stone-500 text-sm sm:text-base md:text-lg leading-relaxed mb-8 md:mb-10">
-              Montujeme v bytech, domech, kancelářích i ve starých budovách. Žádní brigádníci
-              ani subdodavatelé — přijedeme my dva.
+            <p className="text-stone-600 text-base md:text-lg leading-relaxed">
+              Žádní brigádníci ani subdodavatelé, na zakázku přijedeme my dva. Když jde stará roleta spravit,
+              raději ji spravíme, než abychom vám prodávali novou.
             </p>
-            <div className="grid grid-cols-3 gap-4 sm:gap-6 border-t border-stone-300/70 pt-7 md:pt-8">
-              <div>
-                <p className="text-2xl sm:text-3xl font-black"><AnimatedNumber value={FATHER_YEARS} suffix=" let" /></p>
-                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">na trhu</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-black"><AnimatedNumber value={50} suffix=" km" /></p>
-                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">maximální dojezd</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-black"><AnimatedNumber value={JAN_YEARS} suffix=" let" /></p>
-                <p className="text-[11px] sm:text-xs text-stone-500 mt-0.5 leading-snug">Jan v oboru</p>
-              </div>
-            </div>
           </div>
-          <div data-reveal className="order-1 lg:order-2 rounded-xl overflow-hidden h-[240px] sm:h-[340px] md:h-[460px] bg-stone-200 relative">
+          <div className="order-1 lg:order-2 rounded-xl overflow-hidden h-[240px] sm:h-[340px] md:h-[460px] bg-stone-200 relative">
             <Image
               src="/realizace/montaz.jpeg"
               alt="Jan Kaňka při montáži rolety na vysoké okno"
@@ -470,50 +361,37 @@ export default function Home() {
       </div>
 
       {/* ── PŮSOBNOST ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
-        <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kde jezdíme</p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
-            Mladá Boleslav<br />a okolí do 50 km
-          </h2>
-          <p className="mt-4 text-stone-500 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
-            Sídlíme v Kosmonosech. Do hodiny jízdy se většinou domluvíme.
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28 grid lg:grid-cols-[1fr_1.6fr] gap-8 lg:gap-20">
+        <div>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">Kam jezdíme</h2>
+          <p className="mt-4 text-stone-600 text-base md:text-lg max-w-sm leading-relaxed">
+            Bydlíme v Kosmonosech, do 50 km od nás je to většinou do hodiny jízdy.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
-          {regions.map((r, idx) => (
-            <div key={idx} data-reveal style={{ transitionDelay: `${idx * 70}ms` }} className="rounded-xl border border-stone-200 bg-white p-5 md:p-6 hover:border-amber-200 transition-colors duration-200">
-              <h3 className="font-bold text-sm md:text-base text-stone-900 mb-4 flex items-center gap-2">
-                <span className="text-amber-600 text-base">📍</span> {r.kraj}
-              </h3>
-              <ul className="space-y-1.5 md:space-y-2">
-                {r.mesta.map((m) => (
-                  <li key={m} className="flex items-center gap-2 text-stone-600 text-[13px] md:text-[15px]">
-                    <span className="w-1 h-1 rounded-full bg-amber-500 shrink-0" />
-                    {m}
-                  </li>
-                ))}
-              </ul>
+        <div className="space-y-6">
+          {regions.map(([kraj, mesta]) => (
+            <div key={kraj}>
+              <h3 className="font-semibold text-stone-900 mb-1">{kraj}</h3>
+              <p className="text-stone-600 text-[15px] md:text-base leading-relaxed">{mesta}</p>
             </div>
           ))}
+          <p className="text-stone-600 text-[15px] md:text-base">
+            Vaši obec tu nevidíte? Napište, kde bydlíte, a hned vám řekneme, jestli dojedeme.
+          </p>
         </div>
-        <p className="mt-6 text-stone-400 text-xs sm:text-sm text-center">
-          Svou obec tu nevidíte? Napište nám, pravděpodobně přijedeme.
-        </p>
       </div>
 
       {/* ── FAQ ── */}
       <div className="bg-[#f0ebe0] border-y border-stone-200">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24">
-          <div className="mb-10 md:mb-14" data-reveal>
-            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Co se lidé ptají</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">Nejčastější<br />otázky</h2>
+          <div className="mb-10 md:mb-14">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">Na co se ptáte</h2>
           </div>
           <div className="space-y-2.5 md:space-y-3">
             {faqs.map((item, idx) => {
               const isOpen = openFaq === idx;
               return (
-                <div key={idx} data-reveal style={{ transitionDelay: `${idx * 45}ms` }}>
+                <div key={idx}>
                 <div className={`rounded-xl border bg-white transition-colors duration-200 ${isOpen ? "border-amber-300" : "border-stone-200 hover:border-stone-300"}`}>
                   <button
                     type="button"
@@ -537,78 +415,36 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── PROČ MY ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
-        <div className="mb-10 md:mb-14" data-reveal>
-          <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Proč my dva</p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">Co od nás<br />čekat</h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
-          {[
-            { t: `${FATHER_YEARS} let zkušeností v rodině`, s: "Otec dělá žaluzie od roku 1992, já se u něj učím od roku 2018. Víme, jak se co montuje." },
-            { t: "Jezdíme osobně", s: "Žádní brigádníci ani subdodavatelé. Na zakázku přijedeme my dva." },
-            { t: "Opravíme, co jde", s: "Když se stará žaluzie nebo roleta dá opravit, opravíme ji. Nové vám cpát nebudeme." },
-          ].map((r, idx) => (
-            <div key={idx} data-reveal style={{ transitionDelay: `${idx * 70}ms` }}
-              className="bg-white rounded-xl border border-stone-200 p-5 md:p-6">
-              <h3 className="font-bold text-base md:text-lg text-stone-900 mb-2">{r.t}</h3>
-              <p className="text-stone-500 text-sm md:text-base leading-relaxed">{r.s}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* ── KONTAKT ── */}
       <div id="kontakt" className="bg-[#f0ebe0] border-y border-stone-200 scroll-mt-16 md:scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
-          <div data-reveal>
-            <p className="text-amber-700 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-3">Kontakt</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-8">Napište nám<br />nebo zavolejte</h2>
-            <div className="space-y-5">
-              <a href="tel:+420776385776" className="flex items-center gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
-                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-                </div>
-                <div>
-                  <p className="text-[11px] text-stone-400 uppercase tracking-wider">Telefon</p>
-                  <p className="font-bold text-lg text-stone-900 group-hover:text-amber-700 transition-colors">776 385 776</p>
-                </div>
-              </a>
-              <a href="mailto:jankanka6@seznam.cz" className="flex items-center gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
-                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                </div>
-                <div>
-                  <p className="text-[11px] text-stone-400 uppercase tracking-wider">E-mail</p>
-                  <p className="font-bold text-base text-stone-900 group-hover:text-amber-700 transition-colors break-all">jankanka6@seznam.cz</p>
-                </div>
-              </a>
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <div>
-                  <p className="text-[11px] text-stone-400 uppercase tracking-wider">Sídlo</p>
-                  <p className="font-bold text-base text-stone-900">Kosmonosy, 293 06</p>
-                </div>
+          <div>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-8">Zavolejte nebo napište</h2>
+            <dl className="space-y-4">
+              <div>
+                <dt className="text-sm text-stone-500">Telefon</dt>
+                <dd><a href="tel:+420776385776" className="font-serif text-3xl font-semibold text-stone-900 hover:text-amber-700 transition-colors">776 385 776</a></dd>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                </div>
-                <div>
-                  <p className="text-[11px] text-stone-400 uppercase tracking-wider">Pracovní doba</p>
-                  <p className="font-bold text-base text-stone-900">Po–Ne, 9:00–19:00</p>
-                </div>
+              <div>
+                <dt className="text-sm text-stone-500">E-mail</dt>
+                <dd><a href="mailto:jankanka6@seznam.cz" className="text-lg text-stone-900 hover:text-amber-700 transition-colors break-all">jankanka6@seznam.cz</a></dd>
               </div>
-            </div>
+              <div>
+                <dt className="text-sm text-stone-500">Kde nás najdete</dt>
+                <dd className="text-lg text-stone-900">Kosmonosy, 293 06</dd>
+              </div>
+              <div>
+                <dt className="text-sm text-stone-500">Kdy to bereme</dt>
+                <dd className="text-lg text-stone-900">Každý den 9:00 až 19:00</dd>
+              </div>
+            </dl>
             <button onClick={openModal} className="btn-primary mt-8">
               Nezávazná poptávka
             </button>
           </div>
 
           {/* MAPA */}
-          <div data-reveal className="rounded-xl overflow-hidden border border-stone-200 h-[280px] sm:h-[340px] lg:h-auto min-h-[320px]">
+          <div className="rounded-xl overflow-hidden border border-stone-200 h-[280px] sm:h-[340px] lg:h-auto min-h-[320px]">
             {mapsAllowed ? (
               <iframe
                 src="https://www.google.com/maps?q=Kosmonosy+293+06&hl=cs&z=13&output=embed"
@@ -648,11 +484,10 @@ export default function Home() {
 
       {/* ── CTA PRUH ── */}
       <div className="relative overflow-hidden bg-amber-600">
-        <div aria-hidden className="pointer-events-none absolute -bottom-20 left-1/4 w-[320px] h-[320px] rounded-full bg-white/10 blur-[80px]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-12 md:py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-8">
           <div>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white">Chcete cenovou nabídku?</h2>
-            <p className="mt-1 text-amber-100 text-sm sm:text-base">Zavolejte nebo napište — zaměření je zdarma.</p>
+            <h2 className="font-serif text-2xl md:text-3xl font-semibold text-white">Chcete znát cenu?</h2>
+            <p className="mt-1 text-amber-100 text-sm sm:text-base">Přijedeme zaměřit, nic to nestojí.</p>
           </div>
           <div className="flex flex-col md:flex-row gap-3 w-full sm:w-auto shrink-0">
             <a href="tel:+420776385776" className="flex items-center justify-center gap-2 bg-white text-amber-700 hover:bg-amber-50 active:scale-95 transition-all font-bold text-sm sm:text-base px-6 py-3.5 rounded-lg whitespace-nowrap shadow-sm">
@@ -753,8 +588,7 @@ export default function Home() {
             <div className="px-5 py-4 sm:px-7 sm:py-5 md:px-8 md:py-6">
               <div className="flex items-start justify-between mb-5">
                 <div>
-                  <p className="text-amber-700 text-[10px] sm:text-xs font-semibold uppercase tracking-widest mb-1">Napište nám</p>
-                  <h2 id="poptavka-title" className="text-xl sm:text-2xl md:text-3xl font-black leading-tight">Přijedeme se podívat</h2>
+                                    <h2 id="poptavka-title" className="font-serif text-2xl md:text-3xl font-semibold leading-tight">Přijedeme se podívat</h2>
                 </div>
                 <button onClick={() => setOpen(false)} aria-label="Zavřít" className="w-8 h-8 flex items-center justify-center text-stone-400 hover:text-stone-900 text-2xl ml-4 shrink-0 mt-0.5">×</button>
               </div>
@@ -762,8 +596,8 @@ export default function Home() {
               {status === "ok" ? (
                 <div className="py-6 text-center">
                   <div className="mx-auto mb-4 w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-2xl text-green-600">✓</div>
-                  <h3 className="text-xl font-black mb-2">Poptávka odeslána!</h3>
-                  <p className="text-stone-500 text-sm mb-6">Děkujeme, ozveme se vám co nejdříve.</p>
+                  <h3 className="text-xl font-black mb-2">Zpráva odeslána</h3>
+                  <p className="text-stone-500 text-sm mb-6">Ozveme se vám, většinou ještě dnes.</p>
                   <button onClick={() => setOpen(false)} className="btn-primary">Zavřít</button>
                 </div>
               ) : (
@@ -923,14 +757,7 @@ export default function Home() {
           from { transform: translateX(100%); }
           to   { transform: translateX(0); }
         }
-        [data-reveal] {
-          opacity: 0;
-          transform: translateY(22px);
-          transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
-        }
-        [data-reveal].reveal-in { opacity: 1; transform: none; }
         @media (prefers-reduced-motion: reduce) {
-          [data-reveal] { opacity: 1; transform: none; transition: none; }
           * { animation-duration: .01ms !important; }
         }
       `}</style>

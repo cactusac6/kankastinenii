@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const csp = [
   "default-src 'self'",
-  "img-src 'self' data: https://images.pexels.com",
+  "img-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
   "script-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
@@ -17,15 +17,6 @@ const csp = [
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.pexels.com",
-        pathname: "/photos/**",
-      },
-    ],
-  },
   async headers() {
     return [
       {
