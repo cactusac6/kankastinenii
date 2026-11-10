@@ -136,7 +136,7 @@ export default function Home() {
     ["Přijedeme zaměřit", "Rozměry bereme na místě. Zdarma a bez závazku."],
     ["Pošleme cenu", "Konkrétní částka podle zaměření."],
     ["Objednáme materiál", "Až když cenu odsouhlasíte. Za materiál platíte zálohovou fakturou."],
-    ["Namontujeme", "Přijedeme spolu s tátou, obvykle zabere jedno odpoledne."],
+    ["Namontujeme", "Přijedeme a namontujeme, obvykle to zabere jedno odpoledne."],
     ["Doplatíte", "Zbytek až po hotové montáži."],
   ];
 
@@ -231,7 +231,7 @@ export default function Home() {
               Žaluzie<br />Mladá<br /><span className="text-amber-500">Boleslav</span>
             </h1>
             <p className="mt-5 md:mt-6 text-stone-200 text-base sm:text-lg md:text-xl leading-relaxed max-w-md">
-              Žaluzie, rolety a sítě proti hmyzu. Táta je montuje od roku {YEAR_FOUNDED}, já s ním jezdím od roku 2018.
+              Žaluzie, rolety a sítě proti hmyzu. Jsme tu pro vás už od roku {YEAR_FOUNDED}.
               Zaměříme, namontujeme i opravíme.
             </p>
             <div className="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3">
@@ -337,14 +337,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           <div className="order-2 lg:order-1">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-5 md:mb-6">
-              Táta a já
+              Jsme tu pro vás od roku {YEAR_FOUNDED}
             </h2>
             <p className="text-stone-800 text-base md:text-lg leading-relaxed mb-4">
-              Táta dělá žaluzie od roku {YEAR_FOUNDED}. Já jsem se k němu přidal v roce 2018, takže už spolu jezdíme
-              pár let. Jmenuju se Jan Kaňka a firma je moje, ale většinu fíglů ohledně montáže jsem se naučil od něj.
+              Kaňka stínění začínal můj táta v roce {YEAR_FOUNDED}. Já jsem se přidal v roce 2018 a dnes jezdíme na zakázky spolu.
             </p>
             <p className="text-stone-600 text-base md:text-lg leading-relaxed">
-              Žádní brigádníci ani subdodavatelé, na zakázku přijedeme my dva. Když jde stará roleta spravit,
+              Žádní brigádníci ani subdodavatelé, přijedeme my dva. Když jde stará roleta spravit,
               raději ji spravíme, než abychom vám prodávali novou.
             </p>
           </div>
