@@ -122,11 +122,11 @@ export default function Home() {
   }, [lightbox]);
 
   const services = [
-    ["https://images.pexels.com/photos/9270061/pexels-photo-9270061.jpeg?auto=compress&cs=tinysrgb&w=600", "Vertikální žaluzie", "Velká okna, prosklené stěny, kanceláře."],
-    ["https://images.pexels.com/photos/15021456/pexels-photo-15021456.jpeg?auto=compress&cs=tinysrgb&w=600", "Horizontální žaluzie", "Hliníkové i dřevěné, na míru a v libovolné barvě."],
-    ["https://images.pexels.com/photos/16153504/pexels-photo-16153504.jpeg?auto=compress&cs=tinysrgb&w=600", "Rolety den a noc", "Přes den světlo, večer tma."],
-    ["https://images.pexels.com/photos/17756267/pexels-photo-17756267.jpeg?auto=compress&cs=tinysrgb&w=600", "Sítě proti hmyzu", "Rámové do okna, rolovací do dveří."],
-    ["https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=600", "Opravy", "Zasekla se roleta, praskla šňůrka, nejde markýza? Většinou to jde spravit a nové nekupujete."],
+    ["https://images.pexels.com/photos/9270061/pexels-photo-9270061.jpeg?auto=compress&cs=tinysrgb&w=1200", "Vertikální žaluzie", "Velká okna, prosklené stěny, kanceláře."],
+    ["https://images.pexels.com/photos/15021456/pexels-photo-15021456.jpeg?auto=compress&cs=tinysrgb&w=1200", "Horizontální žaluzie", "Hliníkové i dřevěné, na míru a v libovolné barvě."],
+    ["https://images.pexels.com/photos/16153504/pexels-photo-16153504.jpeg?auto=compress&cs=tinysrgb&w=1200", "Rolety den a noc", "Přes den světlo, večer tma."],
+    ["https://images.pexels.com/photos/17756267/pexels-photo-17756267.jpeg?auto=compress&cs=tinysrgb&w=1200", "Sítě proti hmyzu", "Rámové do okna, rolovací do dveří."],
+    ["https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=1200", "Opravy", "Zasekla se roleta, praskla šňůrka, nejde markýza? Většinou to jde spravit a nové nekupujete."],
   ];
 
   const steps = [
@@ -265,7 +265,7 @@ export default function Home() {
             {services.map(([img, t, d]) => (
               <li key={t} className="grid grid-cols-[7rem_1fr] sm:grid-cols-[11rem_1fr] gap-4 sm:gap-6 py-4 border-b border-stone-300 items-center">
                 <div className="relative aspect-[4/3] rounded-md overflow-hidden bg-stone-200">
-                  <Image src={img} alt={t} fill sizes="176px" className="object-cover" />
+                  <Image src={img} alt={t} fill quality={90} sizes="(min-width: 640px) 352px, 224px" className="object-cover" />
                 </div>
                 <div>
                   <h3 className="font-serif text-lg md:text-xl font-semibold text-stone-900">{t}</h3>
