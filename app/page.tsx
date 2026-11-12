@@ -55,10 +55,10 @@ export default function Home() {
 
     setStatus("sending");
     try {
-      const res = await fetch("/api/kontakt", {
+      const res = await fetch("https://forms.build-offer.cz/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, _site: "kankastineni", _subject: "Nová poptávka z webu Kaňka stínění" }),
       });
       const data = await res.json().catch(() => null);
       if (res.ok && data?.success) {

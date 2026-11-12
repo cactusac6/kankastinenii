@@ -6,7 +6,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "script-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  "connect-src 'self' https://forms.build-offer.cz",
   "form-action 'self'",
   "frame-src https://www.google.com",
   "frame-ancestors 'none'",
