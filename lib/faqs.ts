@@ -3,7 +3,7 @@ export const YEAR_FOUNDED = 1992;
 export const faqs = [
   {
     q: "Jezdíte i mimo Mladou Boleslav?",
-    a: "Jezdíme v okruhu asi 50 km — Bakov, Benátky, Mnichovo Hradiště, Turnov, Jičín a okolí. Napište nám, kde bydlíte, a hned vám řekneme, jestli je to možné.",
+    a: "Jezdíme po Mladé Boleslavi a okolí — Bakov, Benátky, Mnichovo Hradiště, Turnov, Jičín a okolí. Napište nám, kde bydlíte, a hned vám řekneme, jestli je to možné.",
   },
   {
     q: "Jak rychle se domluvíme?",

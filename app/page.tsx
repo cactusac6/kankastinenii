@@ -9,6 +9,50 @@ const NAV = [["#", "Domů"], ["#sluzby", "Služby"], ["#o-nas", "O nás"], ["#ko
 
 const FATHER_YEARS = new Date().getFullYear() - YEAR_FOUNDED;
 
+function Blinds3D() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !matchMedia("(hover:hover) and (pointer:fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0, tx = 0, ty = 0, x = 0, y = 0, visible = true;
+    const loop = () => {
+      x += (tx - x) * 0.07; y += (ty - y) * 0.07;
+      el.style.setProperty("--ry", (x * 16).toFixed(2) + "deg");
+      el.style.setProperty("--rx", (-y * 11).toFixed(2) + "deg");
+      raf = visible ? requestAnimationFrame(loop) : 0;
+    };
+    const move = (e: PointerEvent) => { tx = e.clientX / window.innerWidth * 2 - 1; ty = e.clientY / window.innerHeight * 2 - 1; };
+    const io = new IntersectionObserver(([en]) => {
+      visible = en.isIntersecting;
+      if (visible && !raf) raf = requestAnimationFrame(loop);
+    });
+    io.observe(el);
+    window.addEventListener("pointermove", move, { passive: true });
+    raf = requestAnimationFrame(loop);
+    return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener("pointermove", move); };
+  }, []);
+  return (
+    <div aria-hidden className="hidden lg:flex shrink-0 items-center justify-center relative py-10 lg:w-[400px] xl:w-[440px]">
+      <div ref={ref} className="blinds3d">
+        <div className="b3-glow" />
+        <div className="b3-rig">
+          <div className="b3-frame">
+            <div className="b3-view" />
+            <div className="b3-slats">
+              {Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ animationDelay: `${i * -0.2}s` }} />)}
+            </div>
+            <div className="b3-rail" />
+            <div className="b3-cord"><span /></div>
+          </div>
+          <span className="b3-chip b3-c1">Žaluzie</span>
+          <span className="b3-chip b3-c2">Rolety</span>
+          <span className="b3-chip b3-c3">Sítě</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -22,6 +66,22 @@ export default function Home() {
   const mapsAllowed = useConsent() === "all";
   const modalRef = useRef<HTMLDivElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!matchMedia("(hover:hover) and (pointer:fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-tilt]"));
+    const offs = cards.map((c) => {
+      const mv = (e: PointerEvent) => {
+        const r = c.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+        c.style.transform = `perspective(900px) rotateY(${(px * 14).toFixed(2)}deg) rotateX(${(-py * 12).toFixed(2)}deg) translateZ(8px)`;
+        c.style.setProperty("--gx", (px + 0.5) * 100 + "%"); c.style.setProperty("--gy", (py + 0.5) * 100 + "%");
+      };
+      const lv = () => { c.style.transform = ""; };
+      c.addEventListener("pointermove", mv); c.addEventListener("pointerleave", lv);
+      return () => { c.removeEventListener("pointermove", mv); c.removeEventListener("pointerleave", lv); };
+    });
+    return () => offs.forEach((f) => f());
+  }, []);
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -223,7 +283,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent md:hidden" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 min-h-[calc(100svh-58px)] md:min-h-[calc(100svh-68px)] flex items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 min-h-[calc(100svh-58px)] md:min-h-[calc(100svh-68px)] flex items-center justify-between gap-10">
           <div className="py-16 sm:py-20 md:py-24 max-w-xl" style={{ animation: "heroIn .7s cubic-bezier(.16,1,.3,1) both" }}>
             <h1 className="font-serif text-[44px] sm:text-[60px] md:text-[72px] xl:text-[84px] font-semibold leading-[0.95] tracking-tight text-white">
               Žaluzie<br />Mladá<br /><span className="text-amber-500">Boleslav</span>
@@ -244,8 +304,32 @@ export default function Home() {
               </a>
             </div>
             <p className="mt-8 text-stone-300 text-sm">
-              Zaměření zdarma · jezdíme do 50 km od Kosmonos
+              Zaměření zdarma · Mladá Boleslav a okolí
             </p>
+          </div>
+          <Blinds3D />
+        </div>
+      </section>
+
+      {/* ── DODAVATELÉ ── */}
+      <section className="relative bg-stone-900 text-white overflow-hidden" aria-labelledby="dodavatele-title">
+        <div aria-hidden className="pointer-events-none absolute -bottom-32 left-1/3 w-[520px] h-[520px] rounded-full bg-amber-500/15 blur-[120px]" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-16 items-center">
+          <div>
+            <h2 id="dodavatele-title" className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
+              Stínění od<br />Rolux a Proklima
+            </h2>
+            <p className="mt-4 text-stone-300 text-base md:text-lg max-w-md leading-relaxed">
+              Žaluzie, rolety a komponenty bereme od dodavatelů Rolux a Proklima. Zaměříme, objednáme a namontujeme.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+            {[["Rolux", "Dodavatel stínící techniky"], ["Proklima", "Dodavatel stínící techniky"]].map(([n, l]) => (
+              <div key={n} data-tilt className="tilt-card rounded-2xl border border-white/10 bg-white/[0.04] p-7 md:p-9 min-h-[170px] md:min-h-[210px] flex flex-col justify-between">
+                <span className="text-amber-500 text-sm font-medium">{l}</span>
+                <span className="font-serif text-4xl md:text-5xl font-semibold tracking-tight">{n}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -340,6 +424,52 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ── REALIZACE: výměna žaluzie ── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-16 sm:pb-20 md:pb-28">
+        <div className="mb-10 md:mb-14">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
+            Výměna celé žaluzie, rodinný dům
+          </h2>
+          <p className="mt-4 text-stone-600 text-base md:text-lg max-w-xl leading-relaxed">
+            Přetržené šňůry, stará žaluzie dosloužila. Vyměnili jsme ji celou, včetně nylonové struny a kolíku.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          {[
+            { img: "/realizace/zaluzie-1.jpg", t: "Původní stav", s: "Stará žaluzie s přetrženými šňůrami." },
+            { img: "/realizace/zaluzie-2.jpg", t: "Okno po demontáži", s: "Stará žaluzie je pryč, okno připravené na novou." },
+            { img: "/realizace/zaluzie-3.jpg", t: "Příprava na montáž", s: "Nové šňůry a kování na parapetu." },
+          ].map((r) => (
+            <div key={r.img} className="rounded-xl overflow-hidden border border-stone-200 bg-white">
+              <div className="h-[260px] sm:h-[320px] md:h-[380px] overflow-hidden bg-stone-100 relative">
+                <Image src={r.img} alt={r.t} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+              </div>
+              <div className="p-4 md:p-5">
+                <h3 className="font-bold text-sm md:text-base mb-1">{r.t}</h3>
+                <p className="text-stone-500 text-xs sm:text-sm leading-relaxed">{r.s}</p>
+              </div>
+            </div>
+          ))}
+          <div className="rounded-xl overflow-hidden border border-stone-200 bg-white">
+            <div className="h-[260px] sm:h-[320px] md:h-[380px] overflow-hidden bg-stone-900 relative">
+              <video
+                src="/realizace/zaluzie-struna.mp4"
+                poster="/realizace/zaluzie-struna.jpg"
+                controls
+                playsInline
+                preload="none"
+                aria-label="Výměna nylonové struny a zasazení kolíku u žaluzie"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-4 md:p-5">
+              <h3 className="font-bold text-sm md:text-base mb-1">Výměna struny a kolíku</h3>
+              <p className="text-stone-500 text-xs sm:text-sm leading-relaxed">Krátké video z montáže.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── O NÁS ── */}
       <div id="o-nas" className="bg-[#f0ebe0] border-y border-stone-200 scroll-mt-16 md:scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
@@ -372,7 +502,7 @@ export default function Home() {
         <div>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">Kam jezdíme</h2>
           <p className="mt-4 text-stone-600 text-base md:text-lg max-w-sm leading-relaxed">
-            Bydlíme v Kosmonosech, do 50 km od nás je to většinou do hodiny jízdy.
+            Bydlíme v Kosmonosech a jezdíme po Mladé Boleslavi a okolí.
           </p>
         </div>
         <div className="space-y-6">

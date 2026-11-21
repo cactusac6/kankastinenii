@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Kaňka stínění",
   },
   description:
-    "Žaluzie Mladá Boleslav a okolí do 50 km – montáž a opravy žaluzií, rolet, markýz, plisé, japonských stěn a sítí proti hmyzu. Středočeský, Liberecký i Královéhradecký kraj. Praxe od roku 1992. Zaměření zdarma, nezávazná nabídka.",
+    "Žaluzie Mladá Boleslav a okolí – montáž a opravy žaluzií, rolet, markýz, plisé, japonských stěn a sítí proti hmyzu. Středočeský, Liberecký i Královéhradecký kraj. Praxe od roku 1992. Zaměření zdarma, nezávazná nabídka.",
   keywords: [
     "žaluzie Mladá Boleslav",
     "stínící technika Mladá Boleslav",
@@ -62,14 +62,14 @@ export const metadata: Metadata = {
     siteName: "Kaňka stínění",
     title: "Žaluzie Mladá Boleslav – Kaňka stínění",
     description:
-      "Žaluzie Mladá Boleslav a okolí do 50 km – montáž žaluzií, rolet a sítí proti hmyzu. Praxe od roku 1992. Zaměření zdarma, nezávazná nabídka.",
+      "Žaluzie Mladá Boleslav a okolí – montáž žaluzií, rolet a sítí proti hmyzu. Praxe od roku 1992. Zaměření zdarma, nezávazná nabídka.",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Žaluzie a stínicí technika – Kaňka stínění" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Žaluzie Mladá Boleslav – Kaňka stínění",
     description:
-      "Žaluzie Mladá Boleslav a okolí do 50 km – montáž žaluzií, rolet a sítí proti hmyzu. Zaměření zdarma.",
+      "Žaluzie Mladá Boleslav a okolí – montáž žaluzií, rolet a sítí proti hmyzu. Zaměření zdarma.",
     images: ["/og-image.jpg"],
   },
 };
