@@ -10,12 +10,13 @@ const NAV = [["#", "Domů"], ["#sluzby", "Služby"], ["#o-nas", "O nás"], ["#ko
 const FATHER_YEARS = new Date().getFullYear() - YEAR_FOUNDED;
 
 function Blinds3D() {
-  const ref = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"zaluzie" | "roleta" | "sit">("zaluzie");
   const [touched, setTouched] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const pick = (m: "zaluzie" | "roleta" | "sit") => {
     setTouched(true);
+    setPlaying(true);
     if (m === mode) return;
     if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
       frameRef.current?.animate(
@@ -25,29 +26,9 @@ function Blinds3D() {
     }
     setMode(m);
   };
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !matchMedia("(hover:hover) and (pointer:fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let raf = 0, tx = 0, ty = 0, x = 0, y = 0, visible = true;
-    const loop = () => {
-      x += (tx - x) * 0.07; y += (ty - y) * 0.07;
-      el.style.setProperty("--ry", (x * 16).toFixed(2) + "deg");
-      el.style.setProperty("--rx", (-y * 11).toFixed(2) + "deg");
-      raf = visible ? requestAnimationFrame(loop) : 0;
-    };
-    const move = (e: PointerEvent) => { tx = e.clientX / window.innerWidth * 2 - 1; ty = e.clientY / window.innerHeight * 2 - 1; };
-    const io = new IntersectionObserver(([en]) => {
-      visible = en.isIntersecting;
-      if (visible && !raf) raf = requestAnimationFrame(loop);
-    });
-    io.observe(el);
-    window.addEventListener("pointermove", move, { passive: true });
-    raf = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener("pointermove", move); };
-  }, []);
   return (
     <div role="group" aria-label="Ukázka stínění: žaluzie, rolety, sítě" className="hidden lg:flex shrink-0 items-center justify-center relative py-10 lg:w-[400px] xl:w-[440px]">
-      <div ref={ref} className="blinds3d" data-mode={mode} data-touched={touched ? "1" : "0"}>
+      <div className="blinds3d" data-mode={mode} data-touched={touched ? "1" : "0"} data-playing={playing ? "1" : "0"}>
         <div aria-hidden className="b3-glow" />
         <div className="b3-rig">
           <div ref={frameRef} className="b3-frame">
@@ -74,10 +55,14 @@ function Blinds3D() {
           <button type="button" aria-pressed={mode === "roleta"} onClick={() => pick("roleta")} className="b3-chip b3-c2">Rolety</button>
           <button type="button" aria-pressed={mode === "sit"} onClick={() => pick("sit")} className="b3-chip b3-c3">Sítě</button>
         </div>
-        <p className="b3-hint">
-          <svg aria-hidden viewBox="0 0 24 24" fill="currentColor"><path d="M4 2l16 9.5-7.2 2.2L9.5 21z" /></svg>
-          Klikněte pro animaci
-        </p>
+        <button type="button" aria-pressed={playing} onClick={() => { setTouched(true); setPlaying((v) => !v); }} className="b3-hint">
+          {playing ? (
+            <svg aria-hidden viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
+          ) : (
+            <svg aria-hidden viewBox="0 0 24 24" fill="currentColor"><path d="M4 2l16 9.5-7.2 2.2L9.5 21z" /></svg>
+          )}
+          {playing ? "Klikněte pro zastavení animace" : "Klikněte pro animaci"}
+        </button>
       </div>
     </div>
   );
