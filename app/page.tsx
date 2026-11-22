@@ -11,6 +11,20 @@ const FATHER_YEARS = new Date().getFullYear() - YEAR_FOUNDED;
 
 function Blinds3D() {
   const ref = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [mode, setMode] = useState<"zaluzie" | "roleta" | "sit">("zaluzie");
+  const [touched, setTouched] = useState(false);
+  const pick = (m: "zaluzie" | "roleta" | "sit") => {
+    setTouched(true);
+    if (m === mode) return;
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      frameRef.current?.animate(
+        [{ transform: "rotateY(0deg)" }, { transform: "rotateY(88deg)", offset: 0.5 }, { transform: "rotateY(0deg)" }],
+        { duration: 700, easing: "ease-in-out" }
+      );
+    }
+    setMode(m);
+  };
   useEffect(() => {
     const el = ref.current;
     if (!el || !matchMedia("(hover:hover) and (pointer:fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -32,22 +46,38 @@ function Blinds3D() {
     return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener("pointermove", move); };
   }, []);
   return (
-    <div aria-hidden className="hidden lg:flex shrink-0 items-center justify-center relative py-10 lg:w-[400px] xl:w-[440px]">
-      <div ref={ref} className="blinds3d">
-        <div className="b3-glow" />
+    <div role="group" aria-label="Ukázka stínění: žaluzie, rolety, sítě" className="hidden lg:flex shrink-0 items-center justify-center relative py-10 lg:w-[400px] xl:w-[440px]">
+      <div ref={ref} className="blinds3d" data-mode={mode} data-touched={touched ? "1" : "0"}>
+        <div aria-hidden className="b3-glow" />
         <div className="b3-rig">
-          <div className="b3-frame">
-            <div className="b3-view" />
-            <div className="b3-slats">
-              {Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ animationDelay: `${i * -0.2}s` }} />)}
+          <div ref={frameRef} className="b3-frame">
+            <div aria-hidden className="b3-view" />
+            <div aria-hidden className="b3-layer b3-l-z">
+              <div className="b3-slats">
+                {Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ animationDelay: `${i * -0.2}s` }} />)}
+              </div>
+              <div className="b3-rail" />
+              <div className="b3-cord"><span /></div>
             </div>
-            <div className="b3-rail" />
-            <div className="b3-cord"><span /></div>
+            <div aria-hidden className="b3-layer b3-l-r">
+              <div className="b3-clip"><div className="b3-fabric"><i className="b3-hem" /></div></div>
+              <div className="b3-tube" />
+            </div>
+            <div aria-hidden className="b3-layer b3-l-s">
+              <div className="b3-guide b3-gl" />
+              <div className="b3-guide b3-gr" />
+              <div className="b3-clip"><div className="b3-fabric b3-mesh"><i className="b3-hem" /></div></div>
+              <div className="b3-tube" />
+            </div>
           </div>
-          <span className="b3-chip b3-c1">Žaluzie</span>
-          <span className="b3-chip b3-c2">Rolety</span>
-          <span className="b3-chip b3-c3">Sítě</span>
+          <button type="button" aria-pressed={mode === "zaluzie"} onClick={() => pick("zaluzie")} className="b3-chip b3-c1">Žaluzie</button>
+          <button type="button" aria-pressed={mode === "roleta"} onClick={() => pick("roleta")} className="b3-chip b3-c2">Rolety</button>
+          <button type="button" aria-pressed={mode === "sit"} onClick={() => pick("sit")} className="b3-chip b3-c3">Sítě</button>
         </div>
+        <p className="b3-hint">
+          <svg aria-hidden viewBox="0 0 24 24" fill="currentColor"><path d="M4 2l16 9.5-7.2 2.2L9.5 21z" /></svg>
+          Klikněte pro animaci
+        </p>
       </div>
     </div>
   );
