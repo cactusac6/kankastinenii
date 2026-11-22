@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import { resetConsent, setConsent, useConsent } from "@/lib/cookieConsent";
 import { faqs, YEAR_FOUNDED } from "@/lib/faqs";
@@ -9,11 +9,53 @@ const NAV = [["#", "Domů"], ["#sluzby", "Služby"], ["#o-nas", "O nás"], ["#ko
 
 const FATHER_YEARS = new Date().getFullYear() - YEAR_FOUNDED;
 
+// Časová osa žaluzie: [čas s, stažení 0–1, náklon lamel ve stupních]
+const BLIND_KF: [number, number, number][] = [
+  [0, 0, 40], [1.8, 0, 8], [2.6, 0, 8], [5, 0, 70], [5.8, 0, 70],
+  [10.3, 1, 70], [11.5, 1, 70], [16, 0, 70], [16.8, 0, 70], [18.8, 0, 40],
+];
+const BLIND_CYCLE = 18.8;
+function blindPose(t: number): [number, number] {
+  for (let i = 1; i < BLIND_KF.length; i++) {
+    const a = BLIND_KF[i - 1], b = BLIND_KF[i];
+    if (t <= b[0]) {
+      const k = (t - a[0]) / (b[0] - a[0]);
+      const e = k * k * (3 - 2 * k);
+      return [a[1] + (b[1] - a[1]) * e, a[2] + (b[2] - a[2]) * e];
+    }
+  }
+  return [0, 40];
+}
+
 function Blinds3D() {
   const frameRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"zaluzie" | "roleta" | "sit">("zaluzie");
   const [touched, setTouched] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const zRef = useRef<HTMLDivElement>(null);
+  const tl = useRef(0);
+  useEffect(() => {
+    const el = zRef.current;
+    if (!el) return;
+    const apply = (time: number) => {
+      const [r, t] = blindPose(time);
+      el.style.setProperty("--r", r.toFixed(4));
+      el.style.setProperty("--t", t.toFixed(2));
+    };
+    apply(tl.current);
+    if (!playing || mode !== "zaluzie" || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0, last = performance.now(), visible = true;
+    const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; });
+    io.observe(el);
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (visible) { tl.current = (tl.current + dt) % BLIND_CYCLE; apply(tl.current); }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(raf); io.disconnect(); };
+  }, [playing, mode]);
   const pick = (m: "zaluzie" | "roleta" | "sit") => {
     setTouched(true);
     setPlaying(true);
@@ -33,9 +75,12 @@ function Blinds3D() {
         <div className="b3-rig">
           <div ref={frameRef} className="b3-frame">
             <div aria-hidden className="b3-view" />
-            <div aria-hidden className="b3-layer b3-l-z">
-              <div className="b3-slats">
-                {Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ animationDelay: `${i * -0.2}s` }} />)}
+            <div ref={zRef} aria-hidden className="b3-layer b3-l-z">
+              <div className="b3-wb">
+                {Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ "--i": i } as CSSProperties} />)}
+                <b className="b3-str b3-s1" />
+                <b className="b3-str b3-s2" />
+                <div className="b3-brail" />
               </div>
               <div className="b3-rail" />
               <div className="b3-cord"><span /></div>
@@ -340,10 +385,15 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-            {[["Rolux", "Dodavatel stínící techniky"], ["Proklima", "Dodavatel stínící techniky"]].map(([n, l]) => (
-              <div key={n} data-tilt className="tilt-card rounded-2xl border border-white/10 bg-white/[0.04] p-7 md:p-9 min-h-[170px] md:min-h-[210px] flex flex-col justify-between">
-                <span className="text-amber-500 text-sm font-medium">{l}</span>
-                <span className="font-serif text-4xl md:text-5xl font-semibold tracking-tight">{n}</span>
+            {([
+              ["Rolux", "/dodavatele/rolux.png", 640, 341, "w-[170px] md:w-[200px]"],
+              ["Proklima", "/dodavatele/proklima.png", 560, 108, "w-[230px] md:w-[270px]"],
+            ] as const).map(([n, src, w, h, cls]) => (
+              <div key={n} data-tilt className="tilt-card rounded-2xl border border-white/10 bg-white/[0.04] p-6 md:p-7 flex flex-col gap-5">
+                <span className="text-amber-500 text-sm font-medium">Dodavatel stínící techniky a komponentů</span>
+                <div className="rounded-xl bg-white h-[120px] md:h-[150px] flex items-center justify-center px-5">
+                  <Image src={src} alt={`Logo ${n}`} width={w} height={h} quality={90} className={`${cls} h-auto`} />
+                </div>
               </div>
             ))}
           </div>
