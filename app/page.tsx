@@ -74,7 +74,42 @@ function Blinds3D() {
         <div aria-hidden className="b3-glow" />
         <div className="b3-rig">
           <div ref={frameRef} className="b3-frame">
-            <div aria-hidden className="b3-view" />
+            <div aria-hidden className="b3-view">
+              <svg viewBox="0 0 300 410" preserveAspectRatio="xMidYMid slice" aria-hidden>
+              <defs>
+              <linearGradient id="b3sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#4f93d2"/><stop offset=".42" stopColor="#8fc0e8"/><stop offset=".7" stopColor="#f4e3c0"/></linearGradient>
+              <radialGradient id="b3sun" cx="225" cy="92" r="135" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#fffbe6" stopOpacity=".95"/><stop offset=".25" stopColor="#fff0b8" stopOpacity=".55"/><stop offset="1" stopColor="#ffd98a" stopOpacity="0"/></radialGradient>
+              <linearGradient id="b3fld" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#9bb552"/><stop offset="1" stopColor="#58792f"/></linearGradient>
+              <filter id="b3blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="1.6"/></filter>
+              </defs>
+              <rect width="300" height="410" fill="url(#b3sky)"/>
+              <rect width="300" height="410" fill="url(#b3sun)"/>
+              <circle cx="225" cy="92" r="16" fill="#fffdf0"/>
+              <g className="b3-cl" filter="url(#b3blur)" fill="#fff" opacity=".92">
+              <ellipse cx="70" cy="72" rx="34" ry="9"/><ellipse cx="88" cy="64" rx="22" ry="10"/><ellipse cx="55" cy="66" rx="18" ry="8"/>
+              <ellipse cx="170" cy="142" rx="30" ry="7"/><ellipse cx="184" cy="136" rx="18" ry="8"/>
+              <ellipse cx="262" cy="40" rx="26" ry="6"/><ellipse cx="248" cy="35" rx="14" ry="6"/>
+              </g>
+              <path d="M0 232 L30 205 L58 224 L96 190 L140 222 L178 200 L220 228 L262 196 L300 222 V300 H0Z" fill="#9db6cc" opacity=".75"/>
+              <path d="M0 252 C40 226 82 236 124 248 C168 260 206 222 254 238 C276 246 290 248 300 246 V410 H0Z" fill="#86a98a"/>
+              <path d="M0 276 C54 252 112 268 162 274 C214 280 258 256 300 266 V410 H0Z" fill="#6f9a56"/>
+              <g>
+              <rect x="38" y="264" width="30" height="19" fill="#f6f0e4"/><path d="M34 265 L53 249 L72 265Z" fill="#c4533a"/><rect x="45" y="271" width="5" height="6" fill="#7a8da0"/><rect x="56" y="271" width="5" height="6" fill="#7a8da0"/>
+              <rect x="86" y="270" width="24" height="15" fill="#efe6d2"/><path d="M83 271 L98 259 L113 271Z" fill="#b8472f"/><rect x="92" y="275" width="4" height="5" fill="#7a8da0"/>
+              <rect x="136" y="264" width="30" height="19" fill="#f1eadb"/><path d="M134 265 L151 254 L168 265Z" fill="#9a5a45"/>
+              <rect x="166" y="238" width="11" height="45" fill="#efe6d2"/><path d="M164 238 L171.5 214 L179 238Z" fill="#7f4f3d"/><rect x="169" y="246" width="5" height="8" rx="2.5" fill="#6f7f90"/>
+              <rect x="204" y="268" width="28" height="17" fill="#f6f0e4"/><path d="M200 269 L218 255 L236 269Z" fill="#c4533a"/><rect x="209" y="274" width="5" height="6" fill="#7a8da0"/><rect x="221" y="274" width="5" height="6" fill="#7a8da0"/>
+              <rect x="252" y="272" width="22" height="14" fill="#efe6d2"/><path d="M249 273 L263 262 L277 273Z" fill="#b8472f"/>
+              </g>
+              <g fill="#3d6a35"><circle cx="24" cy="284" r="9"/><circle cx="118" cy="286" r="8"/><circle cx="192" cy="286" r="10"/><circle cx="240" cy="290" r="8"/><circle cx="286" cy="284" r="9"/><circle cx="76" cy="288" r="7"/></g>
+              <g fill="#5d8c46" opacity=".8"><circle cx="21" cy="281" r="5"/><circle cx="115" cy="283" r="4.5"/><circle cx="189" cy="283" r="5.5"/><circle cx="237" cy="287" r="4.5"/><circle cx="283" cy="281" r="5"/></g>
+              <path d="M0 302 C60 290 120 298 180 294 C230 291 270 298 300 294 V410 H0Z" fill="url(#b3fld)"/>
+              <path d="M0 322 C70 311 150 318 300 309 V320 C150 329 70 322 0 333Z" fill="#b2c96c" opacity=".45"/>
+              <path d="M0 346 C80 334 170 342 300 330 V342 C170 354 80 346 0 358Z" fill="#b2c96c" opacity=".35"/>
+              <path d="M118 410 C132 372 152 340 170 306 L178 306 C170 346 164 376 204 410Z" fill="#dccca3"/>
+              <ellipse cx="12" cy="408" rx="42" ry="30" fill="#3a6030"/><ellipse cx="292" cy="412" rx="48" ry="34" fill="#335a29"/>
+              </svg>
+            </div>
             <div ref={zRef} aria-hidden className="b3-layer b3-l-z">
               <div className="b3-wb">
                 {Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ "--i": i } as CSSProperties} />)}
