@@ -640,6 +640,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="mt-8 md:mt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50 px-5 py-5 md:px-7">
+          <p className="text-stone-800 text-base md:text-lg">
+            <span className="font-semibold">Máte taky přetrženou šňůru nebo zaseklou žaluzii?</span>{" "}
+            <span className="text-stone-600">Většinou to jde spravit a nové nekupujete.</span>
+          </p>
+          <button type="button" onClick={() => openModal("Opravy")} className="btn-primary shrink-0">Chci opravu</button>
+        </div>
       </div>
 
       {/* ── O NÁS ── */}
@@ -650,7 +657,7 @@ export default function Home() {
               Jsme tu pro vás od roku {YEAR_FOUNDED}
             </h2>
             <p className="text-stone-800 text-base md:text-lg leading-relaxed mb-4">
-              Kaňka stínění začínal můj táta v roce {YEAR_FOUNDED}. Já jsem se přidal v roce 2018 a dnes jezdíme na zakázky spolu.
+              Firmu založil můj táta v roce {YEAR_FOUNDED}. Já jsem se přidal v roce 2018 a dnes jezdíme na zakázky spolu.
             </p>
             <p className="text-stone-600 text-base md:text-lg leading-relaxed">
               Žádní brigádníci ani subdodavatelé, přijedeme my dva. Když jde stará roleta spravit,
@@ -743,7 +750,7 @@ export default function Home() {
                 <dd className="text-lg text-stone-900">Kosmonosy, 293 06</dd>
               </div>
               <div>
-                <dt className="text-sm text-stone-500">Kdy to bereme</dt>
+                <dt className="text-sm text-stone-500">Kdy nás zastihnete</dt>
                 <dd className="text-lg text-stone-900">Každý den 9:00 až 19:00</dd>
               </div>
             </dl>
