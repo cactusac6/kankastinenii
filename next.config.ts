@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   images: {
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: "https",
