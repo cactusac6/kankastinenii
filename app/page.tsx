@@ -308,13 +308,13 @@ export default function Home() {
     ["https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=1200", "Opravy", "Zasekla se roleta, praskla šňůrka, nejde markýza? Většinou to jde spravit a nové nekupujete."],
   ];
 
-  const steps = [
-    ["Ozvete se", "Zavoláte nebo napíšete, jaká máte okna a co byste chtěli."],
-    ["Přijedeme zaměřit", "Rozměry bereme na místě. Zdarma a bez závazku."],
-    ["Pošleme cenu", "Konkrétní částka podle zaměření."],
-    ["Objednáme materiál", "Až když cenu odsouhlasíte. Za materiál platíte zálohovou fakturou."],
-    ["Namontujeme", "Přijedeme a namontujeme, obvykle to zabere jedno odpoledne."],
-    ["Doplatíte", "Zbytek až po hotové montáži."],
+  const steps: [string, string, string, string?][] = [
+    ["Ozvete se", "Zavolejte nebo napište, jaká máte okna. Ozveme se ještě ten den.", "M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"],
+    ["Přijedeme zaměřit", "Rozměry bereme na místě a rovnou poradíme, co se k vašim oknům hodí.", "M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0zM14.5 12.5l2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2", "Zdarma"],
+    ["Pošleme cenu", "Konkrétní částka podle zaměření. Bez závazku, rozmyslíte si to v klidu.", "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h5"],
+    ["Objednáme materiál", "Až když cenu odsouhlasíte. Zálohu platíte jen na materiál.", "M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8", "Záloha"],
+    ["Namontujeme", "Přijedeme my dva. Obvykle to zabere jedno odpoledne.", "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"],
+    ["Doplatíte", "Zbytek až po hotové montáži, když je všechno v pořádku.", "M22 11.1V12a10 10 0 1 1-5.9-9.1M22 4 12 14l-3-3", "Doplatek"],
   ];
 
   const realizace = [
@@ -504,27 +504,60 @@ export default function Home() {
       </div>
 
       {/* ── JAK TO FUNGUJE ── */}
-      <div className="bg-[#f0ebe0] border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-14 sm:py-16 md:py-24 grid lg:grid-cols-[1fr_1.6fr] gap-8 lg:gap-20">
-          <div>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">Jak to probíhá</h2>
-            <p className="mt-4 text-stone-600 text-base md:text-lg max-w-sm leading-relaxed">
-              Celou částku nikdo dopředu nechce. Materiál objednáváme po vašem souhlasu s cenou a doplácíte po montáži.
-            </p>
+      <section aria-labelledby="postup-title" className="relative bg-stone-900 text-white overflow-hidden">
+        <div aria-hidden className="absolute inset-0 opacity-[.035] bg-[repeating-linear-gradient(90deg,#fff_0_1px,transparent_1px_28px)]" />
+        <div aria-hidden className="absolute -top-40 right-[-10%] w-[620px] h-[620px] rounded-full bg-amber-500/15 blur-[120px]" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
+          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-20 items-end">
+            <div>
+              <p className="text-amber-500 text-sm font-semibold tracking-wide uppercase">Od telefonu po hotovou montáž</p>
+              <h2 id="postup-title" className="mt-3 font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.02] tracking-tight">Jak to probíhá</h2>
+              <p className="mt-5 text-stone-300 text-base md:text-lg leading-relaxed max-w-lg">
+                Celou částku nikdo dopředu nechce. Platíte postupně a tak, abyste nic neriskovali.
+              </p>
+            </div>
+            <dl className="rounded-2xl border border-white/10 bg-white/[.04] backdrop-blur-sm divide-y divide-white/10">
+              {[
+                ["Zaměření a cenová nabídka", "0 Kč", "text-amber-400"],
+                ["Záloha", "jen na materiál", "text-white"],
+                ["Doplatek", "až po montáži", "text-white"],
+              ].map(([k, v, c]) => (
+                <div key={k} className="flex items-baseline justify-between gap-6 px-6 py-4">
+                  <dt className="text-stone-400 text-[15px]">{k}</dt>
+                  <dd className={`font-serif text-xl md:text-2xl font-semibold ${c}`}>{v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-          <ol className="space-y-5 md:space-y-6">
-            {steps.map(([t, d], idx) => (
-              <li key={t} className="grid grid-cols-[2rem_1fr] gap-3">
-                <span className="font-serif text-xl text-amber-700 leading-snug">{idx + 1}.</span>
-                <div>
-                  <h3 className="font-semibold text-stone-900 text-base md:text-lg">{t}</h3>
-                  <p className="text-stone-600 text-[15px] md:text-base leading-relaxed">{d}</p>
+
+          <ol className="relative mt-14 md:mt-20 grid gap-8 lg:gap-6 lg:grid-cols-6">
+            <span aria-hidden className="hidden lg:block absolute top-7 left-[8%] right-[8%] h-px bg-gradient-to-r from-amber-500/0 via-amber-500/60 to-amber-500/0" />
+            <span aria-hidden className="lg:hidden absolute left-7 top-2 bottom-2 w-px bg-amber-500/30" />
+            {steps.map(([t, d, icon, tag], idx) => (
+              <li key={t} className="group relative grid grid-cols-[3.5rem_1fr] gap-4 lg:block">
+                <div className="relative z-10 w-14 h-14 rounded-full bg-stone-900 border border-amber-500/50 grid place-items-center text-amber-400 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-stone-900 group-hover:border-amber-500 group-hover:-translate-y-1">
+                  <svg aria-hidden viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round"><path d={icon} /></svg>
+                </div>
+                <div className="lg:mt-6">
+                  <div className="flex items-center gap-2 h-6">
+                    <span className="font-serif text-amber-500 text-sm">{String(idx + 1).padStart(2, "0")}</span>
+                    {tag && <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">{tag}</span>}
+                  </div>
+                  <h3 className="mt-1.5 font-semibold text-lg text-white">{t}</h3>
+                  <p className="mt-1.5 text-stone-400 text-[15px] leading-relaxed">{d}</p>
                 </div>
               </li>
             ))}
           </ol>
+
+          <div className="mt-14 md:mt-16 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-t border-white/10 pt-8">
+            <button type="button" onClick={openModal} className="btn-primary">Začít krokem 1</button>
+            <a href="tel:+420776385776" className="text-stone-300 hover:text-white transition-colors text-[15px]">
+              nebo rovnou zavolejte <span className="font-semibold text-white">776 385 776</span>
+            </a>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* ── REALIZACE ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-28">
