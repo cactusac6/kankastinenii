@@ -31,6 +31,8 @@ export const metadata: Metadata = {
     "žaluzie Kosmonosy",
     "vertikální žaluzie",
     "horizontální žaluzie",
+    "venkovní žaluzie",
+    "elektrické žaluzie",
     "rolety den a noc",
     "plisé rolety",
     "japonské stěny",

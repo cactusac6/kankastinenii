@@ -184,6 +184,7 @@ export default function Home() {
   const services = [
     ["https://images.pexels.com/photos/9270061/pexels-photo-9270061.jpeg?auto=compress&cs=tinysrgb&w=1200", "Vertikální žaluzie", "Velká okna, prosklené stěny, kanceláře."],
     ["https://images.pexels.com/photos/15021456/pexels-photo-15021456.jpeg?auto=compress&cs=tinysrgb&w=1200", "Horizontální žaluzie", "Hliníkové i dřevěné, na míru a v libovolné barvě."],
+    ["https://images.pexels.com/photos/28606784/pexels-photo-28606784.jpeg?auto=compress&cs=tinysrgb&w=1200", "Venkovní žaluzie, elektrické", "Elektricky ovládané. Zastíní okno zvenku, dřív než slunce projde sklem."],
     ["https://images.pexels.com/photos/16153504/pexels-photo-16153504.jpeg?auto=compress&cs=tinysrgb&w=1200", "Rolety den a noc", "Přes den světlo, večer tma."],
     ["https://images.pexels.com/photos/17756267/pexels-photo-17756267.jpeg?auto=compress&cs=tinysrgb&w=1200", "Sítě proti hmyzu", "Rámové do okna, rolovací do dveří."],
     ["https://images.pexels.com/photos/12394619/pexels-photo-12394619.jpeg?auto=compress&cs=tinysrgb&w=1200", "Opravy", "Zasekla se roleta, praskla šňůrka, nejde markýza? Většinou to jde spravit a nové nekupujete."],
