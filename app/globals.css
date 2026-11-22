@@ -54,7 +54,7 @@ body {
 .b3-hint{position:absolute;right:0;top:calc(100% + 18px);display:inline-flex;align-items:center;gap:8px;margin:0;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);cursor:pointer;font-family:inherit;line-height:1.25;transition:background .25s,border-color .25s}
 .b3-hint:hover{background:rgba(255,255,255,.18);border-color:rgba(245,158,11,.7)}
 .b3-hint:focus-visible{outline:2px solid #f59e0b;outline-offset:3px}
-.b3-hint[aria-pressed=true] svg{animation:none}
+.b3-hint[data-on="1"] svg{animation:none}
 .b3-hint svg{width:15px;height:15px;color:#f59e0b;animation:b3tap 1.8s ease-in-out infinite}
 @keyframes b3tap{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(2px,2px) scale(.86)}}
 

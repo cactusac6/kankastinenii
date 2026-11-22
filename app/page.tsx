@@ -35,6 +35,8 @@ function Mosquito() {
 
 function Blinds3D() {
   const frameRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(true);
   const [mode, setMode] = useState<"zaluzie" | "roleta" | "sit">("zaluzie");
   const [touched, setTouched] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -62,6 +64,13 @@ function Blinds3D() {
     raf = requestAnimationFrame(tick);
     return () => { cancelAnimationFrame(raf); io.disconnect(); };
   }, [playing, mode]);
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([en]) => setInView(en.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const pick = (m: "zaluzie" | "roleta" | "sit") => {
     setTouched(true);
     setPlaying(true);
@@ -76,7 +85,7 @@ function Blinds3D() {
   };
   return (
     <div role="group" aria-label="Ukázka stínění: žaluzie, rolety, sítě" className="hidden lg:flex shrink-0 items-center justify-center relative py-10 lg:w-[400px] xl:w-[440px]">
-      <div className="blinds3d" data-mode={mode} data-touched={touched ? "1" : "0"} data-playing={playing ? "1" : "0"}>
+      <div ref={rootRef} className="blinds3d" data-mode={mode} data-touched={touched ? "1" : "0"} data-playing={playing && inView ? "1" : "0"}>
         <div aria-hidden className="b3-glow" />
         <div className="b3-rig">
           <div ref={frameRef} className="b3-frame">
@@ -146,7 +155,7 @@ function Blinds3D() {
           <button type="button" aria-pressed={mode === "roleta"} onClick={() => pick("roleta")} className="b3-chip b3-c2">Rolety</button>
           <button type="button" aria-pressed={mode === "sit"} onClick={() => pick("sit")} className="b3-chip b3-c3">Sítě</button>
         </div>
-        <button type="button" aria-pressed={playing} onClick={() => { setTouched(true); setPlaying((v) => !v); }} className="b3-hint">
+        <button type="button" data-on={playing ? "1" : undefined} onClick={() => { setTouched(true); setPlaying((v) => !v); }} className="b3-hint">
           {playing ? (
             <svg aria-hidden viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
           ) : (
