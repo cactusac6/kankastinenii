@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, type CSSProperties } from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { resetConsent, setConsent, useConsent } from "@/lib/cookieConsent";
 import { faqs, YEAR_FOUNDED } from "@/lib/faqs";
 
@@ -30,6 +30,20 @@ function blindPose(t: number): [number, number] {
 function Mosquito() {
   return (
     <svg viewBox="0 0 32 20" aria-hidden><g className="w"><ellipse cx="13" cy="6" rx="6.5" ry="2.1" transform="rotate(-28 13 6)"/></g><g className="w w2"><ellipse cx="16" cy="6.5" rx="6" ry="1.9" transform="rotate(-8 16 6.5)"/></g><path d="M10.5 10.5 7 18M14 11 13 19M17.5 10.5 21 18" fill="none" stroke="#1c1c1c" strokeWidth=".7" strokeLinecap="round"/><ellipse cx="14" cy="10" rx="7" ry="1.9" fill="#1c1c1c"/><circle cx="22" cy="9.6" r="2" fill="#1c1c1c"/><path d="M23.6 10.2 29 12.6" fill="none" stroke="#1c1c1c" strokeWidth=".7" strokeLinecap="round"/></svg>
+  );
+}
+
+function HeroPhoto() {
+  const common = { alt: "", fill: true, priority: true, sizes: "100vw" } as const;
+  const { props: { srcSet: desktop } } = getImageProps({ ...common, src: "/hero/hero-desktop.jpg" });
+  const { props: { srcSet: mobile, ...rest } } = getImageProps({ ...common, src: "/hero/hero-mobile.jpg" });
+  return (
+    <picture>
+      <source media="(min-width: 768px)" srcSet={desktop} />
+      <source media="(max-width: 767px)" srcSet={mobile} />
+      {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+      <img {...rest} fetchPriority="high" className="absolute inset-0 w-full h-full object-cover object-top md:object-center" />
+    </picture>
   );
 }
 
@@ -84,7 +98,7 @@ function Blinds3D() {
     setMode(m);
   };
   return (
-    <div role="group" aria-label="Ukázka stínění: žaluzie, rolety, sítě" className="hidden lg:flex shrink-0 items-center justify-center relative py-10 lg:w-[400px] xl:w-[440px]">
+    <div role="group" aria-label="Ukázka stínění: žaluzie, rolety, sítě" style={{ animation: "fadeIn .5s ease both" }} className="hidden lg:flex shrink-0 items-center justify-center relative py-10 lg:w-[400px] xl:w-[440px]">
       <div ref={rootRef} className="blinds3d" data-mode={mode} data-touched={touched ? "1" : "0"} data-playing={playing && inView ? "1" : "0"}>
         <div aria-hidden className="b3-glow" />
         <div className="b3-rig">
@@ -176,6 +190,14 @@ export default function Home() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const [showTop, setShowTop] = useState(false);
+  const [isLg, setIsLg] = useState(false);
+  useEffect(() => {
+    const mq = matchMedia("(min-width: 1024px)");
+    const on = () => setIsLg(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const mapsAllowed = useConsent() === "all";
@@ -346,7 +368,7 @@ export default function Home() {
             />
             <span className="flex flex-col leading-none">
               <span className="text-[17px] md:text-xl font-bold tracking-tight group-hover:text-amber-700 transition-colors">Kaňka stínění</span>
-              <span className="text-[10px] md:text-[11px] text-stone-400 mt-0.5">Mladá Boleslav a okolí</span>
+              <span className="text-[10px] md:text-[11px] text-stone-500 mt-0.5">Mladá Boleslav a okolí</span>
             </span>
           </a>
 
@@ -363,7 +385,7 @@ export default function Home() {
 
           {/* mobile */}
           <div className="flex md:hidden items-center gap-3">
-            <a href="tel:+420776385776" className="flex items-center gap-1.5 text-amber-600 font-bold text-sm">
+            <a href="tel:+420776385776" className="flex items-center gap-1.5 text-amber-700 font-bold text-sm">
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
               776 385 776
             </a>
@@ -380,24 +402,7 @@ export default function Home() {
       <section className="relative pt-[58px] md:pt-[68px] overflow-hidden">
         {/* background photo */}
         <div aria-hidden className="absolute inset-0">
-          <Image
-            src="/hero/hero-desktop.jpg"
-            alt=""
-            fill
-            priority
-            fetchPriority="high"
-            sizes="100vw"
-            className="hidden md:block object-cover"
-          />
-          <Image
-            src="/hero/hero-mobile.jpg"
-            alt=""
-            fill
-            priority
-            fetchPriority="high"
-            sizes="100vw"
-            className="block md:hidden object-cover object-top"
-          />
+          <HeroPhoto />
           <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/75 to-stone-950/40 md:from-stone-950/92 md:via-stone-950/70 md:to-stone-950/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent md:hidden" />
         </div>
@@ -438,7 +443,7 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <Blinds3D />
+          {isLg && <Blinds3D />}
         </div>
       </section>
 
@@ -485,7 +490,7 @@ export default function Home() {
             {services.map(([img, t, d]) => (
               <li key={t} className="grid grid-cols-[7rem_1fr] sm:grid-cols-[11rem_1fr] gap-4 sm:gap-6 py-4 border-b border-stone-300 items-center">
                 <div className="relative aspect-[4/3] rounded-md overflow-hidden bg-stone-200">
-                  <Image src={img} alt={t} fill quality={90} sizes="(min-width: 640px) 352px, 224px" className="object-cover" />
+                  <Image src={img} alt={t} fill sizes="(min-width: 640px) 176px, 112px" className="object-cover" />
                 </div>
                 <div>
                   <h3 className="font-serif text-lg md:text-xl font-semibold text-stone-900">{t}</h3>
@@ -738,19 +743,19 @@ export default function Home() {
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-8">Zavolejte nebo napište</h2>
             <dl className="space-y-4">
               <div>
-                <dt className="text-sm text-stone-500">Telefon</dt>
+                <dt className="text-sm text-stone-600">Telefon</dt>
                 <dd><a href="tel:+420776385776" className="font-serif text-3xl font-semibold text-stone-900 hover:text-amber-700 transition-colors">776 385 776</a></dd>
               </div>
               <div>
-                <dt className="text-sm text-stone-500">E-mail</dt>
+                <dt className="text-sm text-stone-600">E-mail</dt>
                 <dd><a href="mailto:jankanka6@seznam.cz" className="text-lg text-stone-900 hover:text-amber-700 transition-colors break-all">jankanka6@seznam.cz</a></dd>
               </div>
               <div>
-                <dt className="text-sm text-stone-500">Kde nás najdete</dt>
+                <dt className="text-sm text-stone-600">Kde nás najdete</dt>
                 <dd className="text-lg text-stone-900">Kosmonosy, 293 06</dd>
               </div>
               <div>
-                <dt className="text-sm text-stone-500">Kdy nás zastihnete</dt>
+                <dt className="text-sm text-stone-600">Kdy nás zastihnete</dt>
                 <dd className="text-lg text-stone-900">Každý den 9:00 až 19:00</dd>
               </div>
             </dl>
@@ -780,7 +785,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setConsent("all")}
-                  className="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold transition-colors"
+                  className="px-4 py-2 rounded-lg bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold transition-colors"
                 >
                   Povolit a zobrazit mapu
                 </button>
@@ -799,11 +804,11 @@ export default function Home() {
       </div>
 
       {/* ── CTA PRUH ── */}
-      <div className="relative overflow-hidden bg-amber-600">
+      <div className="relative overflow-hidden bg-amber-700">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-12 md:py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-8">
           <div>
             <h2 className="font-serif text-2xl md:text-3xl font-semibold text-white">Chcete znát cenu?</h2>
-            <p className="mt-1 text-amber-100 text-sm sm:text-base">Přijedeme zaměřit, nic to nestojí.</p>
+            <p className="mt-1 text-amber-50 text-sm sm:text-base">Přijedeme zaměřit, nic to nestojí.</p>
           </div>
           <div className="flex flex-col md:flex-row gap-3 w-full sm:w-auto shrink-0">
             <a href="tel:+420776385776" className="flex items-center justify-center gap-2 bg-white text-amber-700 hover:bg-amber-50 active:scale-95 transition-all font-bold text-sm sm:text-base px-6 py-3.5 rounded-lg whitespace-nowrap shadow-sm">
@@ -850,10 +855,10 @@ export default function Home() {
             <p className="text-stone-300 text-sm">Jan Kaňka</p>
             <p className="text-stone-300 text-sm">Kosmonosy, 293 06</p>
             <p className="text-stone-300 text-sm">IČO: 23200928</p>
-            <p className="text-stone-500 text-xs mt-1">Neplátce DPH</p>
+            <p className="text-stone-400 text-xs mt-1">Neplátce DPH</p>
           </div>
         </div>
-        <div className="border-t border-stone-800 py-4 pb-[88px] md:pb-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-5 text-stone-500 text-xs text-center px-4">
+        <div className="border-t border-stone-800 py-4 pb-[88px] md:pb-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-5 text-stone-400 text-xs text-center px-4">
           <span>© {new Date().getFullYear()} Kaňka stínění — Jan Kaňka</span>
           <a href="/ochrana-osobnich-udaju" className="hover:text-stone-300 transition-colors">Zásady ochrany osobních údajů</a>
           <button type="button" onClick={resetConsent} className="hover:text-stone-300 transition-colors">Nastavení cookies</button>
