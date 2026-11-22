@@ -27,6 +27,12 @@ function blindPose(t: number): [number, number] {
   return [0, 40];
 }
 
+function Mosquito() {
+  return (
+    <svg viewBox="0 0 32 20" aria-hidden><g className="w"><ellipse cx="13" cy="6" rx="6.5" ry="2.1" transform="rotate(-28 13 6)"/></g><g className="w w2"><ellipse cx="16" cy="6.5" rx="6" ry="1.9" transform="rotate(-8 16 6.5)"/></g><path d="M10.5 10.5 7 18M14 11 13 19M17.5 10.5 21 18" fill="none" stroke="#1c1c1c" strokeWidth=".7" strokeLinecap="round"/><ellipse cx="14" cy="10" rx="7" ry="1.9" fill="#1c1c1c"/><circle cx="22" cy="9.6" r="2" fill="#1c1c1c"/><path d="M23.6 10.2 29 12.6" fill="none" stroke="#1c1c1c" strokeWidth=".7" strokeLinecap="round"/></svg>
+  );
+}
+
 function Blinds3D() {
   const frameRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"zaluzie" | "roleta" | "sit">("zaluzie");
@@ -125,6 +131,11 @@ function Blinds3D() {
               <div className="b3-tube" />
             </div>
             <div aria-hidden className="b3-layer b3-l-s">
+              <div className="b3-mqbox">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <span key={n} className={`b3-mq b3-m${n}`}><Mosquito /></span>
+                ))}
+              </div>
               <div className="b3-guide b3-gl" />
               <div className="b3-guide b3-gr" />
               <div className="b3-clip"><div className="b3-fabric b3-mesh"><i className="b3-hem" /></div></div>
