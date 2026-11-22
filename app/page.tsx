@@ -410,9 +410,14 @@ export default function Home() {
                 Naše služby
               </a>
             </div>
-            <p className="mt-8 text-stone-300 text-sm">
-              Zaměření zdarma · Mladá Boleslav a okolí
-            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-stone-300">
+              <div className="flex items-center gap-3">
+                <span className="font-serif text-[34px] leading-none font-semibold text-amber-500">1000+</span>
+                <span className="leading-tight">spokojených<br />zákazníků</span>
+              </div>
+              <span aria-hidden className="hidden sm:block h-9 w-px bg-white/20" />
+              <p>Zaměření zdarma · Mladá Boleslav a okolí</p>
+            </div>
           </div>
           <Blinds3D />
         </div>
