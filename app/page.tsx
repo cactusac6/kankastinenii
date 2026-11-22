@@ -203,7 +203,10 @@ export default function Home() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const openModal = () => {
+  const openModal = (service?: unknown) => {
+    if (typeof service === "string") {
+      setForm((f) => (f.message.trim() ? f : { ...f, message: `Mám zájem o: ${service}. ` }));
+    }
     setErrorMsg("");
     setStatus("idle");
     setOpen(true);
@@ -405,15 +408,15 @@ export default function Home() {
               Žaluzie<br />Mladá<br /><span className="text-amber-500">Boleslav</span>
             </h1>
             <p className="mt-5 md:mt-6 text-stone-200 text-base sm:text-lg md:text-xl leading-relaxed max-w-md">
-              Žaluzie, rolety a sítě proti hmyzu. Jsme tu pro vás už od roku {YEAR_FOUNDED}.
-              Zaměříme, namontujeme i opravíme.
+              Žaluzie, rolety a sítě proti hmyzu na míru, od roku {YEAR_FOUNDED}. Přijedeme zaměřit zdarma,
+              pošleme konkrétní cenu a doplácíte až po montáži.
             </p>
             <div className="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={openModal}
                 className="btn-primary"
               >
-                Nezávazná poptávka
+                Zjistit cenu zdarma
               </button>
               <a href="#sluzby" className="inline-flex items-center justify-center border border-white/40 hover:bg-white/10 active:scale-95 transition-all text-white font-semibold px-6 py-3.5 rounded-lg whitespace-nowrap">
                 Naše služby
@@ -425,7 +428,14 @@ export default function Home() {
                 <span className="leading-tight">spokojených<br />zákazníků</span>
               </div>
               <span aria-hidden className="hidden sm:block h-9 w-px bg-white/20" />
-              <p>Zaměření zdarma · Mladá Boleslav a okolí</p>
+              <ul className="flex flex-col gap-1">
+                {["Zaměření zdarma a bez závazku", "Doplácíte až po montáži", "Ozveme se ještě ten den"].map((x) => (
+                  <li key={x} className="flex items-center gap-2">
+                    <svg aria-hidden viewBox="0 0 24 24" className="w-4 h-4 text-amber-500 shrink-0" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                    {x}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
           <Blinds3D />
@@ -480,6 +490,9 @@ export default function Home() {
                 <div>
                   <h3 className="font-serif text-lg md:text-xl font-semibold text-stone-900">{t}</h3>
                   <p className="mt-1 text-stone-600 text-[15px] md:text-base leading-relaxed">{d}</p>
+                  <button type="button" onClick={() => openModal(t)} className="mt-2 inline-flex items-center gap-1 text-[15px] font-semibold text-amber-700 hover:text-amber-800 underline decoration-amber-700/30 underline-offset-4 hover:decoration-amber-800">
+                    {t === "Opravy" ? "Chci opravu" : "Chci cenu"} <span aria-hidden>→</span>
+                  </button>
                 </div>
               </li>
             ))}
@@ -702,7 +715,7 @@ export default function Home() {
               </div>
             </dl>
             <button onClick={openModal} className="btn-primary mt-8">
-              Nezávazná poptávka
+              Zjistit cenu zdarma
             </button>
           </div>
 
@@ -975,7 +988,7 @@ export default function Home() {
           Zavolat
         </a>
         <button onClick={openModal} className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-amber-600 active:bg-amber-700 text-white font-bold text-sm">
-          Nezávazná poptávka
+          Zjistit cenu zdarma
         </button>
       </div>
 
